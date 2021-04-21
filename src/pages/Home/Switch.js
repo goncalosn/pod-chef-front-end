@@ -1,5 +1,6 @@
 import React from "react";
 import { Switch } from "@headlessui/react";
+import { SunIcon, MoonIcon } from "@heroicons/react/outline";
 
 export default class CustomSwitch extends React.Component {
   constructor(props) {
@@ -28,20 +29,23 @@ export default class CustomSwitch extends React.Component {
 
   render() {
     return (
-      <Switch
-        checked={this.state.enabled}
-        onChange={() => this.setState({ enabled: !this.state.enabled })}
-        className={`${
-          this.state.enabled ? "bg-blue-600" : "bg-gray-200"
-        } relative inline-flex items-center h-6 rounded-full w-11`}
-      >
-        <span className="sr-only">Enable notifications</span>
-        <span
+      <>
+        <SunIcon className="flex-shrink-0 h-6 w-6" />
+        <Switch
+          checked={this.state.enabled}
+          onChange={() => this.setState({ enabled: !this.state.enabled })}
           className={`${
-            this.state.enabled ? "translate-x-6" : "translate-x-1"
-          } inline-block w-4 h-4 transform bg-white rounded-full`}
-        />
-      </Switch>
+            this.state.enabled ? "bg-blue-600" : "bg-gray-200"
+          } relative inline-flex items-center h-6 rounded-full w-11 mx-2`}
+        >
+          <span
+            className={`${
+              this.state.enabled ? "translate-x-6" : "translate-x-1"
+            } inline-block w-4 h-4 transform bg-white rounded-full`}
+          />
+        </Switch>
+        <MoonIcon className="flex-shrink-0 h-6 w-6" />
+      </>
     );
   }
 }
