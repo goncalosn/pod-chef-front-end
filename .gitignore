@@ -104,4 +104,4 @@ dist
 .tern-port
 
 #lock
-my-app/package-lock.json
+package-lock.json
