@@ -16,7 +16,7 @@ export default class CustomSwitch extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+  handler() {
     let htmlClasses = document.querySelector("html").classList;
     if (localStorage.theme === "dark") {
       htmlClasses.remove("dark");
@@ -33,7 +33,10 @@ export default class CustomSwitch extends React.Component {
         <SunIcon className="flex-shrink-0 h-6 w-6" />
         <Switch
           checked={this.state.enabled}
-          onChange={() => this.setState({ enabled: !this.state.enabled })}
+          onChange={() => {
+            this.setState({ enabled: !this.state.enabled });
+            this.handler();
+          }}
           className={`${
             this.state.enabled ? "bg-blue-600" : "bg-gray-200"
           } relative inline-flex items-center h-6 rounded-full w-11 mx-2`}
