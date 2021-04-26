@@ -1,0 +1,5 @@
+.sidebar-item :hover {
+  filter: grayscale(0%) opacity(1);
+  color: lightskyblue;
+  cursor: pointer;
+}

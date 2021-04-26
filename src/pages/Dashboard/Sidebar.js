@@ -1,5 +1,10 @@
 import React from "react";
 
+import "./sidebar.css";
+
+import Services from "./Services.js";
+import Nodes from "./Nodes.js";
+
 import {
   ChipIcon,
   ServerIcon,
@@ -7,19 +12,19 @@ import {
   CubeIcon,
 } from "@heroicons/react/outline";
 import ReactTooltip from "react-tooltip";
-import Services from "./Services.js";
-import Nodes from "./Nodes.js";
 
 export default class Sidebar extends React.Component {
   render() {
     return (
       <div className="flex h-full mr-5">
         <div className="block w-14 h-full rounded-lg shadow-md">
-          <ChipIcon
-            className="h-10 w-10 mx-auto mt-5"
-            data-tip
-            data-for="vm-tooltip"
-          />
+          <div className="sidebar-item">
+            <ChipIcon
+              className="h-10 w-10 mx-auto mt-5"
+              data-tip
+              data-for="vm-tooltip"
+            />
+          </div>
           <ReactTooltip
             id="vm-tooltip"
             place="right"
@@ -29,12 +34,14 @@ export default class Sidebar extends React.Component {
             Virtual Machine
           </ReactTooltip>
 
-          <ServerIcon
-            className="h-10 w-10 mx-auto mt-5"
-            data-tip
-            data-for="cluster-tooltip"
-            onClick={() => this.props.handle(Nodes)}
-          />
+          <div className="sidebar-item">
+            <ServerIcon
+              className="h-10 w-10 mx-auto mt-5 sidebar-item"
+              data-tip
+              data-for="cluster-tooltip"
+              onClick={() => this.props.handle(Nodes)}
+            />
+          </div>
           <ReactTooltip
             id="cluster-tooltip"
             place="right"
@@ -44,12 +51,14 @@ export default class Sidebar extends React.Component {
             Cluster
           </ReactTooltip>
 
-          <CubeIcon
-            className="h-10 w-10 mx-auto mt-5"
-            data-tip
-            data-for="services-tooltip"
-            onClick={() => this.props.handle(Services)}
-          />
+          <div className="sidebar-item">
+            <CubeIcon
+              className="h-10 w-10 mx-auto mt-5 sidebar-item"
+              data-tip
+              data-for="services-tooltip"
+              onClick={() => this.props.handle(Services)}
+            />
+          </div>
           <ReactTooltip
             id="services-tooltip"
             place="right"
@@ -59,11 +68,13 @@ export default class Sidebar extends React.Component {
             Services
           </ReactTooltip>
 
-          <DatabaseIcon
-            className="h-10 w-10 mx-auto mt-5"
-            data-tip
-            data-for="volumes-tooltip"
-          />
+          <div className="sidebar-item">
+            <DatabaseIcon
+              className="h-10 w-10 mx-auto mt-5 sidebar-item"
+              data-tip
+              data-for="volumes-tooltip"
+            />
+          </div>
           <ReactTooltip
             id="volumes-tooltip"
             place="right"

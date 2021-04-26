@@ -1,6 +1,7 @@
 import React from "react";
+
 import Navbar from "../../assets/Navbar.js";
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar.js";
 import Nodes from "./Nodes.js";
 import Hoc from "./HOC.js";
 
