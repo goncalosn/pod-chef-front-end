@@ -1,38 +1,46 @@
-import React from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
-import Navbar from "../../assets/Navbar.js";
-import Sidebar from "./Sidebar.js";
+import { useParams, useHistory } from "react-router-dom";
 import Nodes from "./Nodes.js";
-import Hoc from "./HOC.js";
+import Navbar from "../../components/Navbar.js";
+import Sidebar from "./Sidebar.js";
 
-export default class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { current: Hoc(Nodes) };
-    this.handleClick = this.handleClick.bind(this);
-  }
+const Dashboard = (props) => {
+  const [currentChild, setCurrentChild] = useState(null);
+  let history = useHistory();
+  let { name } = useParams();
 
-  handleClick = (e) => {
-    this.setState({
-      current: Hoc(e),
-    });
-  };
+  const handleClick = useCallback((next, url) => {
+    setCurrentChild(next);
+    history.push("/dashboard" + url);
+  }, []);
 
-  render() {
-    return (
-      <div className="h-screen">
-        <Navbar />
-        <div className="flex w-full px-4 py-4" style={{ height: "90%" }}>
-          <Sidebar handle={this.handleClick} />
-          <div className="flex flex-wrap h-full w-full">
-            <div className="h-full w-full rounded-lg shadow-md p-4 overflow-y-auto">
-              <this.state.current />
-            </div>
+  //on mount
+  useEffect(() => {
+    props.children == null
+      ? setCurrentChild(<Nodes handler={handleClick} />)
+      : setCurrentChild(
+          <Hoc component={props.children} handler={handleClick} name={name} />
+        );
+  }, []);
+
+  return (
+    <div className="h-screen">
+      <Navbar />
+      <div className="flex w-full px-4 py-4" style={{ height: "90%" }}>
+        <Sidebar handler={handleClick} />
+        <div className="flex flex-wrap h-full w-full">
+          <div className="h-full w-full rounded-lg shadow-md p-4 overflow-y-auto">
+            {currentChild}
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
-// const Exe = Hoc(Nodes);
+export default Dashboard;
+
+function Hoc(props) {
+  return <props.component handler={props.handler} name={props.name} />;
+}

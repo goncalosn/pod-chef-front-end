@@ -1,6 +1,6 @@
 import React from "react";
 
-import Navbar from "../../assets/Navbar.js";
+import Navbar from "../../components/Navbar.js";
 
 export default class Home extends React.Component {
   render() {
