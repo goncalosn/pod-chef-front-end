@@ -17,11 +17,13 @@ const Dashboard = (props) => {
 
   //on mount
   useEffect(() => {
-    props.children == null
-      ? setCurrentChild(<Nodes handler={handleClick} />)
-      : setCurrentChild(
-          <Hoc component={props.children} handler={handleClick} name={name} />
-        );
+    // props.children == null
+    //   ? setCurrentChild(<Nodes handler={handleClick} />)
+    //   : setCurrentChild(
+    setCurrentChild(
+      <Child component={props.children} handler={handleClick} name={name} />
+    );
+    // );
   }, []);
 
   return (
@@ -41,6 +43,6 @@ const Dashboard = (props) => {
 
 export default Dashboard;
 
-function Hoc(props) {
+function Child(props) {
   return <props.component handler={props.handler} name={props.name} />;
 }

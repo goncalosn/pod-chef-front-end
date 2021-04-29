@@ -28,9 +28,9 @@ export default class App extends Component {
           <Route path="/signup" exact={true}>
             <Signup />
           </Route>
-          <Route path="/dashboard" exact={true}>
+          {/* <Route path="/dashboard" exact={true}>
             <Dashboard />
-          </Route>
+          </Route> */}
           <Route path="/dashboard/nodes" exact={true}>
             <Dashboard>{Nodes}</Dashboard>
           </Route>
@@ -39,6 +39,9 @@ export default class App extends Component {
           </Route>
           <Route path="/dashboard/services" exact={true}>
             <Dashboard>{Services}</Dashboard>
+          </Route>
+          <Route>
+            <div>404</div>
           </Route>
         </Switch>
       </Router>
