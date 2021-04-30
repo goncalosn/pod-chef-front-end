@@ -4,6 +4,7 @@ import "./sidebar.css";
 
 import Services from "./Services.js";
 import Nodes from "./Nodes.js";
+import VMs from "./VMs.js";
 
 import {
   ChipIcon,
@@ -22,6 +23,7 @@ const Sidebar = (props) => {
             className="h-10 w-10 mx-auto mt-5"
             data-tip
             data-for="vm-tooltip"
+            onClick={() => props.handler(<VMs {...props} />, "/vms")}
           />
         </div>
         <ReactTooltip
