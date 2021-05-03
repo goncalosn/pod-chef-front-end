@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Services from "../../services/index.js";
+import APIServices from "../../services/index.js";
 import PodsChart from "./PodsChart.js";
 import Breadcrumb from "../../components/Breadcrumb.js";
 import Nodes from "../Dashboard/Nodes.js";
@@ -22,7 +22,7 @@ const Node = (props) => {
 
   //on mount
   useEffect(() => {
-    Services.nodes
+    APIServices.nodes
       .getNode(props.name)
       .then((response) => {
         setData(response);

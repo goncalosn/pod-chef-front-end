@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Services from "../../services/index.js";
+import APIServices from "../../services/index.js";
 import Node from "../Node/Node.js";
 import { PlusCircleIcon } from "@heroicons/react/outline";
 const Nodes = (props) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
 
   //on mount
   useEffect(() => {
-    Services.nodes
+    APIServices.nodes
       .getNodes()
       .then((response) => {
         setData(response);
@@ -27,7 +27,8 @@ const Nodes = (props) => {
       </h1>
       <hr />
       <div className="flex flex-wrap text-center">
-        {data.length === 0 ? (
+        {data === null ? (
+          //add node card
           <div className="pt-4 px-2 md:w-1/6 sm:w-1/2 w-full h-full">
             <div className="px-3 py-16 mx-auto border-4 border-dashed border-gray-200 rounded-lg">
               <h2 className="title-font font-medium text-3xl text-gray-600 flex justify-center">
@@ -42,7 +43,7 @@ const Nodes = (props) => {
             </div>
           </div>
         ) : (
-          //there are nodes
+          //create cards for each node
           data.map((node, index) => (
             <div
               className="pt-4 px-2 md:w-1/6 sm:w-1/2 w-full h-full"

@@ -1,6 +1,6 @@
-import { GetNodes, GetNode } from "../configs/nodes";
+import { getNodes, getNode } from "../configs/nodes";
 
 export default {
-  getNodes: () => GetNodes("http://localhost:1323/nodes"),
-  getNode: (node) => GetNode("http://localhost:1323/node", node),
+  getNodes: () => getNodes("http://localhost:1323/nodes"),
+  getNode: (node) => getNode("http://localhost:1323/node", node),
 };

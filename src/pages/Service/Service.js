@@ -1,15 +1,62 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
+import APIServices from "../../services/index.js";
 import ServiceChart from "./ServiceChart.js";
 import Breadcrumb from "../../components/Breadcrumb.js";
 import Services from "../Dashboard/Services.js";
 
 const Service = (props) => {
+  //initialize state with undefined data
+  const [data, setData] = useState({
+    Name: "undefined",
+    Namespace: "undefined",
+    Kind: "undefined",
+    CreatedAt: "undefined",
+    ClusterIP: "undefined",
+    LoadBalancerIP: "undefined",
+    Selectors: {
+      app: "undefined",
+    },
+    Ports: [
+      {
+        protocol: "undefined",
+        port: "undefined",
+        targetPort: "undefined",
+        nodePort: "undefined",
+      },
+    ],
+  });
+
+  //on mount
+  useEffect(() => {
+    APIServices.services
+      .getService(props.name, props.namespace)
+      .then((response) => {
+        setData(response);
+        props.handleBannerState(false);
+      })
+      .catch((error) => {
+        props.handleBannerState(true);
+        props.handleBannerColor("bg-red-600");
+        props.handleBannerText(error);
+      });
+  }, []);
+
   return (
     <div>
       <Breadcrumb
         path={[
-          { name: "Services", component: <Services handler={props.handler} /> },
+          {
+            name: "Services",
+            component: (
+              <Services
+                handler={props.handler}
+                handleBannerState={props.handleBannerState}
+                handleBannerColor={props.handleBannerColor}
+                handleBannerText={props.handleBannerText}
+              />
+            ),
+          },
           { name: props.name },
         ]}
         handler={props.handler}
@@ -72,15 +119,16 @@ const Service = (props) => {
                 <dt className="text-sm font-medium text-gray-500">Selectors</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                   <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
-                    {Object.keys(data.Selectors).map((key, index) => (
-                      <li
-                        className="pl-3 pr-4 py-3 grid grid-cols-2 gap-2"
-                        key={index}
-                      >
-                        <span>{key}:</span>
-                        <span>{data.Selectors[key]}</span>
-                      </li>
-                    ))}
+                    {data.Selectors &&
+                      Object.keys(data.Selectors).map((key, index) => (
+                        <li
+                          className="pl-3 pr-4 py-3 grid grid-cols-2 gap-2"
+                          key={index}
+                        >
+                          <span>{key}:</span>
+                          <span>{data.Selectors[key]}</span>
+                        </li>
+                      ))}
                   </ul>
                 </dd>
               </div>
@@ -120,23 +168,3 @@ const Service = (props) => {
 };
 
 export default Service;
-
-const data = {
-  Name: "my-service4",
-  Namespace: "default",
-  Kind: "LoadBalancer",
-  CreatedAt: "2021-04-29T21:17:31Z",
-  ClusterIP: "10.96.75.75",
-  LoadBalancerIP: "",
-  Selectors: {
-    app: "MyApp",
-  },
-  Ports: [
-    {
-      protocol: "TCP",
-      port: 80,
-      targetPort: 9376,
-      nodePort: 30944,
-    },
-  ],
-};
