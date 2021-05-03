@@ -10,7 +10,9 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-  const [selected, setSelected] = useState(data[0]);
+  const [selected, setSelected] = useState(
+    data.length !== null ? data[0] : null
+  );
 
   return (
     <Listbox value={selected} onChange={setSelected}>
@@ -43,9 +45,9 @@ export default function Example() {
                 static
                 className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
               >
-                {data.map((namespace) => (
+                {data.map((namespace, index) => (
                   <Listbox.Option
-                    key={namespace.id}
+                    key={index}
                     className={({ active }) =>
                       classNames(
                         active ? "text-white bg-indigo-600" : "text-gray-900",

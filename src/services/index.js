@@ -1,5 +1,7 @@
-import deploymentService from "./deployment"
+import deploymentsService from "./deployments";
+import nodesService from "./nodes";
 
 export default {
-  deployment: deploymentService,
-}
+  deployments: deploymentsService,
+  nodes: nodesService,
+};

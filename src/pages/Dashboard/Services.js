@@ -22,19 +22,24 @@ const Services = (props) => {
             key={index}
           >
             <div className="border-2 border-gray-200 px-2 py-6 rounded-lg">
-              <h2 className="title-font font-medium text-3xl text-gray-600">
-                <span
-                  onClick={() => {
-                    props.handler(
-                      <Service name={service.Name} handler={props.handler} />,
-                      "/service/" + service.Name
-                    );
-                  }}
-                  style={{ cursor: "pointer" }}
-                >
-                  {service.Name}
-                </span>
-              </h2>
+              <button
+                type="button"
+                className="inline-flex items-center py-2 rounded-md text-3xl font-medium text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={() => {
+                  props.handler(
+                    <Service
+                      name={service.Name}
+                      handler={props.handler}
+                      handleBannerState={props.handleBannerState}
+                      handleBannerColor={props.handleBannerColor}
+                      handleBannerText={props.handleBannerText}
+                    />,
+                    "/service/" + service.Name
+                  );
+                }}
+              >
+                {service.Name}
+              </button>
               <p className="font-semibold">Created at:</p>
               <p className="leading-relaxed">
                 {new Date(service.CreatedAt).toLocaleString()}

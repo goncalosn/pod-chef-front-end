@@ -9,7 +9,17 @@ const Node = (props) => {
     <div>
       <Breadcrumb
         path={[
-          { name: "Nodes", component: <Nodes handler={props.handler} /> },
+          {
+            name: "Nodes",
+            component: (
+              <Nodes
+                handler={props.handler}
+                handleBannerState={props.handleBannerState}
+                handleBannerColor={props.handleBannerColor}
+                handleBannerText={props.handleBannerText}
+              />
+            ),
+          },
           { name: props.name },
         ]}
         handler={props.handler}
