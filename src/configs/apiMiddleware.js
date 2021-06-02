@@ -1,5 +1,4 @@
-//TODO: change to env var
-const serverURL = "http://localhost:5000";
+const serverURL = process.env.REACT_APP_NODE_URI;
 
 export const apiRequest = (method, route, params) => {
   let currentUser = sessionStorage.getItem("user");
