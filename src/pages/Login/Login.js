@@ -1,7 +1,34 @@
 import React from "react";
 import { LockClosedIcon } from "@heroicons/react/solid";
+import services from "../../services";
+import AuthContext from "../../configs/authContext";
 
 export default class Login extends React.Component {
+  static contextType = AuthContext;
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: "",
+      password: "",
+      redirect: false,
+    };
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log(this.state);
+
+    services.user
+      .signIn({ email: this.state.email, password: this.state.password })
+      .then((res) => {
+        this.context.login(res);
+        console.log(res);
+      })
+      .catch((e) => console.error(e));
+  }
+
   render() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -27,7 +54,10 @@ export default class Login extends React.Component {
               </a>
             </p>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form
+            className="mt-8 space-y-6"
+            onSubmit={(e) => this.handleSubmit(e)}
+          >
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
@@ -42,6 +72,7 @@ export default class Login extends React.Component {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
+                  onChange={(e) => this.setState({ email: e.target.value })}
                 />
               </div>
               <div>
@@ -56,26 +87,12 @@ export default class Login extends React.Component {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
+                  onChange={(e) => this.setState({ password: e.target.value })}
                 />
               </div>
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember_me"
-                  name="remember_me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="remember_me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  Remember me
-                </label>
-              </div>
-
               <div className="text-sm">
                 <a
                   href="#"

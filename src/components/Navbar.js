@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
-import Switch from "./Switch";
+import AuthContext from "../configs/authContext";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import {
   BookmarkAltIcon,
@@ -16,8 +16,12 @@ import {
   MenuIcon,
   XIcon,
 } from "@heroicons/react/outline";
+
 export default class Navbar extends Component {
+  static contextType = AuthContext;
+
   render() {
+    const auth = this.context;
     return (
       <Popover className="relative bg-white">
         {({ open }) => (
@@ -244,20 +248,31 @@ export default class Navbar extends Component {
 
               {/* RIGHT BUTTONS ------------------------------------------------------------- START */}
               <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-                <Switch />
-                <a
-                  href="/login"
-                  className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 mx-6"
-                >
-                  Sign in
-                </a>
-                <a
-                  href="/signup"
-                  className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 mr-4"
-                >
-                  Sign up
-                </a>
+                {auth.user ? (
+                  <button
+                    className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 mr-4"
+                    onClick={() => auth.logout()}
+                  >
+                    Sign out
+                  </button>
+                ) : (
+                  <div>
+                    <a
+                      href="/login"
+                      className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 mx-6"
+                    >
+                      Sign in
+                    </a>
+                    <a
+                      href="/signup"
+                      className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 mr-4"
+                    >
+                      Sign up
+                    </a>
+                  </div>
+                )}
               </div>
+
               {/* RIGHT BUTTONS ------------------------------------------------------------- END */}
             </div>
             {/* NAVBAR ------------------------------------------------------------- END */}
@@ -340,23 +355,32 @@ export default class Navbar extends Component {
                         </a>
                       ))}
                     </div>
-                    <div>
-                      <a
-                        href="/signup"
-                        className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                      >
-                        Sign up
-                      </a>
-                      <p className="mt-6 text-center text-base font-medium text-gray-500">
-                        Existing customer?{" "}
-                        <a
-                          href="/login"
-                          className="text-indigo-600 hover:text-indigo-500"
-                        >
-                          Sign in
+
+                    {auth.user ? (
+                      <div>
+                        <a className="text-indigo-600 hover:text-indigo-500">
+                          Sign out
                         </a>
-                      </p>
-                    </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <a
+                          href="/signup"
+                          className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                        >
+                          Sign up
+                        </a>
+                        <p className="mt-6 text-center text-base font-medium text-gray-500">
+                          Existing customer?{" "}
+                          <a
+                            href="/login"
+                            className="text-indigo-600 hover:text-indigo-500"
+                          >
+                            Sign in
+                          </a>
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </Popover.Panel>

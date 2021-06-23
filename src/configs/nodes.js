@@ -1,9 +1,13 @@
 import axios from "axios";
 
+const user = JSON.parse(sessionStorage.getItem("user"));
+
 // GET request for nodes
 export const getNodes = (url) =>
   axios
-    .get(url, {})
+    .get(url, {
+      headers: { Authorization: "Bearer " + user.token },
+    })
     .then(function (response) {
       return Promise.resolve(response.data);
     })
@@ -18,7 +22,10 @@ export const getNodes = (url) =>
 // GET request for node stats
 export const getNode = (url, node) =>
   axios
-    .get(url, { params: { node: node } })
+    .get(url, {
+      headers: { Authorization: "Bearer " + user.token },
+      params: { node: node },
+    })
     .then(function (response) {
       return Promise.resolve(response.data);
     })
