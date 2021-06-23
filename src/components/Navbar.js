@@ -247,29 +247,32 @@ export default class Navbar extends Component {
               {/* CENTER BUTTONS ------------------------------------------------------------- END */}
 
               {/* RIGHT BUTTONS ------------------------------------------------------------- START */}
-              {auth.user ? (
-                <button
-                  className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 mr-4"
-                  onClick={() => auth.logout()}
-                >
-                  Sign out
-                </button>
-              ) : (
-                <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-                  <a
-                    href="/login"
-                    className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 mx-6"
-                  >
-                    Sign in
-                  </a>
-                  <a
-                    href="/signup"
+              <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+                {auth.user ? (
+                  <button
                     className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 mr-4"
+                    onClick={() => auth.logout()}
                   >
-                    Sign up
-                  </a>
-                </div>
-              )}
+                    Sign out
+                  </button>
+                ) : (
+                  <div>
+                    <a
+                      href="/login"
+                      className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 mx-6"
+                    >
+                      Sign in
+                    </a>
+                    <a
+                      href="/signup"
+                      className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 mr-4"
+                    >
+                      Sign up
+                    </a>
+                  </div>
+                )}
+              </div>
+
               {/* RIGHT BUTTONS ------------------------------------------------------------- END */}
             </div>
             {/* NAVBAR ------------------------------------------------------------- END */}
