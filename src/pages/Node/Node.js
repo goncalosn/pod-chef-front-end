@@ -1,15 +1,55 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import APIServices from "../../services/index.js";
 import PodsChart from "./PodsChart.js";
 import Breadcrumb from "../../components/Breadcrumb.js";
 import Nodes from "../Dashboard/Nodes.js";
 
 const Node = (props) => {
+  //initialize state with undefined data
+  const [data, setData] = useState({
+    Name: "undefined",
+    MaxPods: "undefined",
+    AllocatablePods: "undefined",
+    Conditions: [
+      {
+        Type: "undefined",
+        Status: "undefined",
+        LastTransitionTime: "undefined",
+      },
+    ],
+    CreatedAt: "undefined",
+  });
+
+  //on mount
+  useEffect(() => {
+    APIServices.nodes
+      .getNode(props.name)
+      .then((response) => {
+        setData(response);
+        props.handleBannerState(false);
+      })
+      .catch((error) => {
+        props.handleBannerState(true);
+        props.handleBannerColor("bg-red-600");
+        props.handleBannerText(error);
+      });
+  }, []);
+
   return (
     <div>
       <Breadcrumb
         path={[
-          { name: "Nodes", component: <Nodes handler={props.handler} /> },
+          {
+            name: "Nodes",
+            component: (
+              <Nodes
+                handler={props.handler}
+                handleBannerState={props.handleBannerState}
+                handleBannerColor={props.handleBannerColor}
+                handleBannerText={props.handleBannerText}
+              />
+            ),
+          },
           { name: props.name },
         ]}
         handler={props.handler}
@@ -91,32 +131,3 @@ const Node = (props) => {
 };
 
 export default Node;
-
-const data = {
-  Name: "kind-worker",
-  MaxPods: "110",
-  AllocatablePods: "110",
-  Conditions: [
-    {
-      Type: "MemoryPressure",
-      Status: "False",
-      LastTransitionTime: "2021-04-10T18:54:20Z",
-    },
-    {
-      Type: "DiskPressure",
-      Status: "False",
-      LastTransitionTime: "2021-04-10T18:54:20Z",
-    },
-    {
-      Type: "PIDPressure",
-      Status: "False",
-      LastTransitionTime: "2021-04-10T18:54:20Z",
-    },
-    {
-      Type: "Ready",
-      Status: "True",
-      LastTransitionTime: "2021-04-11T20:21:20Z",
-    },
-  ],
-  CreatedAt: "2021-04-10T18:54:20Z",
-};
