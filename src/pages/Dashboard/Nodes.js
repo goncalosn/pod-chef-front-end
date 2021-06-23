@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import APIServices from "../../services/index.js";
 import Node from "../Node/Node.js";
-import { PlusCircleIcon } from "@heroicons/react/outline";
+
 const Nodes = (props) => {
   const [data, setData] = useState(null);
 
@@ -32,13 +32,7 @@ const Nodes = (props) => {
           <div className="pt-4 px-2 md:w-1/6 sm:w-1/2 w-full h-full">
             <div className="px-3 py-16 mx-auto border-4 border-dashed border-gray-200 rounded-lg">
               <h2 className="title-font font-medium text-3xl text-gray-600 flex justify-center">
-                <a
-                  href="dashboard/create/node"
-                  className="flex rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  <PlusCircleIcon className="h-10 w-10 mr-2" />
-                  Create node
-                </a>
+                No nodes found
               </h2>
             </div>
           </div>

@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 
 import { useParams, useHistory } from "react-router-dom";
-import Nodes from "./Nodes.js";
 import Navbar from "../../components/Navbar.js";
 import Sidebar from "./Sidebar.js";
 import Banner from "../../components/Banner.js";

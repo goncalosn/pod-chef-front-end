@@ -1,5 +1,7 @@
 import { apiRequest } from "../configs/apiMiddleware";
 
-export default {
+const deployments = {
   getDeployments: () => apiRequest("GET", "/deployments"),
-}
+};
+
+export default deployments;

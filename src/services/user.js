@@ -1,6 +1,8 @@
-import { apiRequest } from '../configs/apiMiddleware'
+import { apiRequest } from "../configs/apiMiddleware";
 
-export default {
-    signIn: (jsonData) => apiRequest("POST", "/login", { jsonData }),
-    signUp: (jsonData) => apiRequest("POST", "/signup", { jsonData })
-}
+const users = {
+  signIn: (jsonData) => apiRequest("POST", "/login", { jsonData }),
+  signUp: (jsonData) => apiRequest("POST", "/signup", { jsonData }),
+};
+
+export default users;

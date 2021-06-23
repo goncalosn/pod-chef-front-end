@@ -137,7 +137,7 @@ export default class Navbar extends Component {
                           "group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         )}
                       >
-                        <span>VCenter</span>
+                        <span>Vmware ESXi</span>
                         <ChevronDownIcon
                           className={classNames(
                             open ? "text-gray-600" : "text-gray-400",
@@ -207,7 +207,7 @@ export default class Navbar extends Component {
                               </div>
                               <div className="mt-5 text-sm">
                                 <a
-                                  href="#"
+                                  href="/"
                                   className="font-medium text-indigo-600 hover:text-indigo-500"
                                 >
                                   {" "}
@@ -224,14 +224,14 @@ export default class Navbar extends Component {
                 </Popover>
 
                 <a
-                  href="#"
+                  href="/"
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
                   Docs
                 </a>
 
                 <a
-                  href="#"
+                  href="/"
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
                   Q&A
@@ -333,14 +333,14 @@ export default class Navbar extends Component {
                   <div className="py-6 px-5 space-y-6">
                     <div className="grid grid-cols-2 gap-y-4 gap-x-8">
                       <a
-                        href="#"
+                        href="/"
                         className="text-base font-medium text-gray-900 hover:text-gray-700"
                       >
                         Pricing
                       </a>
 
                       <a
-                        href="#"
+                        href="/"
                         className="text-base font-medium text-gray-900 hover:text-gray-700"
                       >
                         Docs
@@ -358,9 +358,12 @@ export default class Navbar extends Component {
 
                     {auth.user ? (
                       <div>
-                        <a className="text-indigo-600 hover:text-indigo-500">
+                        <span
+                          className="text-indigo-600 hover:text-indigo-500"
+                          onClick={() => auth.logout()}
+                        >
                           Sign out
-                        </a>
+                        </span>
                       </div>
                     ) : (
                       <div>
@@ -402,74 +405,74 @@ const mobileMenu = [
     name: "Analytics",
     description:
       "Get a better understanding of where your traffic is coming from.",
-    href: "#",
+    href: "/",
     icon: ChartBarIcon,
   },
   {
     name: "Engagement",
     description: "Speak directly to your customers in a more meaningful way.",
-    href: "#",
+    href: "/",
     icon: CursorClickIcon,
   },
   {
     name: "Security",
     description: "Your customers' data will be safe and secure.",
-    href: "#",
+    href: "/",
     icon: ShieldCheckIcon,
   },
   {
     name: "Integrations",
     description: "Connect with third-party tools that you're already using.",
-    href: "#",
+    href: "/",
     icon: ViewGridIcon,
   },
   {
     name: "Automations",
     description:
       "Build strategic funnels that will drive your customers to convert",
-    href: "#",
+    href: "/",
     icon: RefreshIcon,
   },
 ];
 const callsToAction = [
-  { name: "Watch Demo", href: "#", icon: PlayIcon },
-  { name: "Contact Sales", href: "#", icon: PhoneIcon },
+  { name: "Watch Demo", href: "/", icon: PlayIcon },
+  { name: "Contact Sales", href: "", icon: PhoneIcon },
 ];
 const resources = [
   {
     name: "Help Center",
     description:
       "Get all of your questions answered in our forums or contact support.",
-    href: "#",
+    href: "/",
     icon: SupportIcon,
   },
   {
     name: "Guides",
     description:
       "Learn how to maximize our platform to get the most out of it.",
-    href: "#",
+    href: "/",
     icon: BookmarkAltIcon,
   },
   {
     name: "Events",
     description:
       "See what meet-ups and other events we might be planning near you.",
-    href: "#",
+    href: "/",
     icon: CalendarIcon,
   },
   {
     name: "Security",
     description: "Understand how we take your privacy seriously.",
-    href: "#",
+    href: "/",
     icon: ShieldCheckIcon,
   },
 ];
 const recentPosts = [
-  { id: 1, name: "Boost your conversion rate", href: "#" },
+  { id: 1, name: "Boost your conversion rate", href: "/" },
   {
     id: 2,
     name: "How to use search engine optimization to drive traffic to your site",
-    href: "#",
+    href: "/",
   },
-  { id: 3, name: "Improve your customer experience", href: "#" },
+  { id: 3, name: "Improve your customer experience", href: "/" },
 ];
