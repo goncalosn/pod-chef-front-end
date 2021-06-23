@@ -1,7 +1,6 @@
 import React from "react";
 
 import Service from "../Service/Service.js";
-import Select from "../../components/Select.js";
 
 const Services = (props) => {
   return (
@@ -10,9 +9,6 @@ const Services = (props) => {
         <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900 ">
           Services
         </h1>
-        <div className="flex items-center justify-end">
-          <Select />
-        </div>
       </div>
       <hr />
       <div className="flex flex-wrap text-center">
