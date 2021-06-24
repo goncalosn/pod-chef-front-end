@@ -1,8 +1,8 @@
-import { getNodes, getNode } from "../configs/nodes";
+import { apiRequest } from "../configs/apiMiddleware";
 
 const nodes = {
-  getNodes: () => getNodes("http://localhost:1323/nodes"),
-  getNode: (node) => getNode("http://localhost:1323/node", node),
+  getNodes: (jsonData) => apiRequest("GET", "/nodes", { jsonData }),
+  getNode: (jsonData) => apiRequest("POST", "/node", { jsonData }),
 };
 
 export default nodes;

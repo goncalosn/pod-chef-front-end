@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import APIServices from "../../services/index.js";
+import services from "../../services";
 import Node from "../Node/Node.js";
 
 const Nodes = (props) => {
@@ -7,7 +7,7 @@ const Nodes = (props) => {
 
   //on mount
   useEffect(() => {
-    APIServices.nodes
+    services.nodes
       .getNodes()
       .then((response) => {
         setData(response);

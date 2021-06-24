@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import services from "../../services";
+import APIServices from "../../services/index.js";
 import PodsChart from "./PodsChart.js";
 import Breadcrumb from "../../components/Breadcrumb.js";
 import Nodes from "../Dashboard/Nodes.js";
@@ -22,8 +22,8 @@ const Node = (props) => {
 
   //on mount
   useEffect(() => {
-    services.nodes
-      .getNode({ node: props.name })
+    APIServices.nodes
+      .getNode(props.name)
       .then((response) => {
         setData(response);
         props.handleBannerState(false);

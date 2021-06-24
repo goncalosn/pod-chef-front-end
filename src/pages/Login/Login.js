@@ -18,13 +18,11 @@ export default class Login extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
 
     services.user
       .signIn({ email: this.state.email, password: this.state.password })
       .then((res) => {
         this.context.login(res);
-        console.log(res);
       })
       .catch((e) => console.error(e));
   }
