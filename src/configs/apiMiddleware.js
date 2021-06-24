@@ -20,11 +20,11 @@ export const apiRequest = (method, route, params) => {
       .then((response) => resolve(response.data))
       .catch((error) => {
         try {
-          return reject(error.response.data.message);
+          reject(error.response.data.message);
         } catch (err) {
-          if (err.response == null) return reject("Error getting data");
+          err.response && reject("Error getting data");
 
-          return reject(error.response.statusText);
+          reject(error.response.statusText);
         }
       });
   });

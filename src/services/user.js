@@ -4,6 +4,8 @@ const users = {
   signIn: (jsonData) => apiRequest("POST", "/login", { jsonData }),
   signUp: (jsonData) => apiRequest("POST", "/signup", { jsonData }),
   getAll: (jsonData) => apiRequest("GET", "/users", { jsonData }),
+  get: (jsonData) => apiRequest("GET", "/user", { jsonData }),
+  delete: (jsonData) => apiRequest("DELETE", "/user", { jsonData }),
 };
 
 export default users;

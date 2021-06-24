@@ -13,6 +13,7 @@ import Dashboard from "../pages/Dashboard/Dashboard.js";
 import Deployments from "../pages/Dashboard/Deployments.js";
 import MyDeployments from "../pages/Dashboard/MyDeployments.js";
 import Users from "../pages/Dashboard/Users.js";
+import User from "../pages/User/User.js";
 import Nodes from "../pages/Dashboard/Nodes.js";
 import Whitelist from "../pages/Dashboard/Whitelist.js";
 import Node from "../pages/Node/Node.js";
@@ -48,6 +49,9 @@ const Router = () => {
             </Route>
             <Route path="/dashboard/users" exact={true}>
               <Dashboard>{Users}</Dashboard>
+            </Route>{" "}
+            <Route path="/dashboard/user/:email" exact={true}>
+              <Dashboard>{User}</Dashboard>
             </Route>
             <Route path="/dashboard/my-deployments" exact={true}>
               <Dashboard>{MyDeployments}</Dashboard>
