@@ -7,17 +7,17 @@ import Nodes from "../Dashboard/Nodes.js";
 const Node = (props) => {
   //initialize state with undefined data
   const [data, setData] = useState({
-    Name: "undefined",
-    MaxPods: "undefined",
-    AllocatablePods: "undefined",
+    Name: "",
+    MaxPods: null,
+    AllocatablePods: null,
     Conditions: [
       {
-        Type: "undefined",
-        Status: "undefined",
-        LastTransitionTime: "undefined",
+        Type: null,
+        Status: null,
+        LastTransitionTime: null,
       },
     ],
-    CreatedAt: "undefined",
+    CreatedAt: null,
   });
 
   //on mount

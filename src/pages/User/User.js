@@ -7,9 +7,9 @@ import Modal from "../../components/Modal.js";
 const User = (props) => {
   //initialize state with undefined data
   const [data, setData] = useState({
-    name: "undefined",
-    role: "undefined",
-    date: "undefined",
+    name: null,
+    role: null,
+    date: null,
   });
   const [tableData, setTableData] = useState(null);
 
@@ -20,8 +20,6 @@ const User = (props) => {
   const TEXT =
     "Are you sure you want to delete this deployment" +
     "This action cannot be undone.";
-
-  const DELETERESPONSE = "Deployment deleted sucessefully";
 
   //on mount
   useEffect(() => {

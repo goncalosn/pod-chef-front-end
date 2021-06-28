@@ -7,6 +7,7 @@ import Deployments from "./Deployments.js";
 import MyDeployments from "./MyDeployments.js";
 import Users from "./Users.js";
 import Whitelist from "./Whitelist.js";
+import MyProfile from "./MyProfile.js";
 
 import {
   ServerIcon,
@@ -14,6 +15,7 @@ import {
   MinusIcon,
   UserGroupIcon,
   MailIcon,
+  UserIcon,
 } from "@heroicons/react/outline";
 import ReactTooltip from "react-tooltip";
 
@@ -109,6 +111,21 @@ const Sidebar = (props) => {
             className="dark:bg-white font-bold dark:text-black"
           >
             My deployments
+          </ReactTooltip>
+
+          <UserIcon
+            className="h-10 w-10 mx-auto mt-3"
+            data-tip
+            data-for="profile-tooltip"
+            onClick={() => props.handler(<MyProfile {...props} />, "/profile")}
+          />
+          <ReactTooltip
+            id="profile-tooltip"
+            place="right"
+            effect="solid"
+            className="dark:bg-white font-bold dark:text-black"
+          >
+            My profile
           </ReactTooltip>
         </div>
       </div>

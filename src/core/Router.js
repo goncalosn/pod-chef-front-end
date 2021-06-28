@@ -17,6 +17,7 @@ import User from "../pages/User/User.js";
 import Nodes from "../pages/Dashboard/Nodes.js";
 import Whitelist from "../pages/Dashboard/Whitelist.js";
 import Node from "../pages/Node/Node.js";
+import MyProfile from "../pages/Dashboard/MyProfile.js";
 import AuthContext from "../configs/authContext.js";
 
 const Router = () => {
@@ -58,6 +59,9 @@ const Router = () => {
             </Route>
             <Route path="/dashboard/whitelist" exact={true}>
               <Dashboard>{Whitelist}</Dashboard>
+            </Route>
+            <Route path="/dashboard/profile" exact={true}>
+              <Dashboard>{MyProfile}</Dashboard>
             </Route>
           </>
         ) : (

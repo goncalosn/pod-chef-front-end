@@ -23,8 +23,7 @@ export default class Login extends React.Component {
       .signIn({ email: this.state.email, password: this.state.password })
       .then((res) => {
         this.context.login(res);
-      })
-      .catch((e) => console.error(e));
+      });
   }
 
   render() {
