@@ -12,7 +12,7 @@ const Dashboard = (props) => {
   const [bannerText, setBannerText] = useState(null);
 
   let history = useHistory();
-  let { name } = useParams(); //specific object of child(a node, a service)
+  let { id } = useParams(); //specific object of child(a node, a service)
 
   //changes the banner state
   const handleBannerState = useCallback((state) => {
@@ -46,7 +46,7 @@ const Dashboard = (props) => {
       <Child
         component={props.children}
         handler={handleClick}
-        name={name}
+        id={id}
         handleBannerState={handleBannerState}
         handleBannerColor={handleBannerColor}
         handleBannerText={handleBannerText}
@@ -88,7 +88,7 @@ function Child(props) {
   return (
     <props.component
       handler={props.handler}
-      name={props.name}
+      id={props.id}
       handleBannerState={props.handleBannerState}
       handleBannerColor={props.handleBannerColor}
       handleBannerText={props.handleBannerText}
