@@ -7,23 +7,23 @@ import Nodes from "../Dashboard/Nodes.js";
 const Node = (props) => {
   //initialize state with undefined data
   const [data, setData] = useState({
-    Name: "undefined",
-    MaxPods: "undefined",
-    AllocatablePods: "undefined",
+    Name: "",
+    MaxPods: null,
+    AllocatablePods: null,
     Conditions: [
       {
-        Type: "undefined",
-        Status: "undefined",
-        LastTransitionTime: "undefined",
+        Type: null,
+        Status: null,
+        LastTransitionTime: null,
       },
     ],
-    CreatedAt: "undefined",
+    CreatedAt: null,
   });
 
   //on mount
   useEffect(() => {
     services.nodes
-      .getNode({ node: props.name })
+      .getNode({ node: props.id })
       .then((response) => {
         setData(response);
         props.handleBannerState(false);
@@ -82,7 +82,7 @@ const Node = (props) => {
                   Created at
                 </dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {new Date(data.CreatedAt).toLocaleString()}
+                  {new Date(data.CreatedAt).toLocaleString("pt-PT")}
                 </dd>
               </div>
               <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -112,7 +112,7 @@ const Node = (props) => {
                         <span>
                           {new Date(
                             condition.LastTransitionTime
-                          ).toLocaleString()}
+                          ).toLocaleString("pt-PT")}
                         </span>
                       </li>
                     ))}

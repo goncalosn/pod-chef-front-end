@@ -9,8 +9,14 @@ export default class AuthComponent extends React.Component {
       user: user ? JSON.parse(user) : undefined,
       login: this.login,
       logout: this.logout,
+      signup: this.signup,
     };
   }
+
+  signup = (user) => {
+    sessionStorage.setItem("user", JSON.stringify(user));
+    this.setState({ user: user });
+  };
 
   login = (user) => {
     sessionStorage.setItem("user", JSON.stringify(user));

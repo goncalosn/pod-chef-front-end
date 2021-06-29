@@ -21,7 +21,7 @@ const Nodes = (props) => {
   }, []);
 
   return (
-    <div>
+    <>
       <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
         Nodes
       </h1>
@@ -50,7 +50,6 @@ const Nodes = (props) => {
                   onClick={() => {
                     props.handler(
                       <Node
-                        name={node.Name}
                         handler={props.handler}
                         handleBannerState={props.handleBannerState}
                         handleBannerColor={props.handleBannerColor}
@@ -64,7 +63,7 @@ const Nodes = (props) => {
                 </button>
                 <p className="font-semibold">Created at:</p>
                 <p className="leading-relaxed">
-                  {new Date(node.CreatedAt).toLocaleString()}
+                  {new Date(node.CreatedAt).toLocaleString("pt-PT")}
                 </p>
                 {node.Roles.map((role, index) => (
                   <span
@@ -79,7 +78,7 @@ const Nodes = (props) => {
           ))
         )}
       </div>
-    </div>
+    </>
   );
 };
 

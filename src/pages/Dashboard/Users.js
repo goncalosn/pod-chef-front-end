@@ -7,13 +7,20 @@ import Modal from "../../components/Modal.js";
 const Users = (props) => {
   const [data, setData] = useState(null);
   const [modal, setModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState(null);
+  const [modalText, setModalText] = useState(null);
+  const [modalRequest, setModalRequest] = useState(null);
   const [user, setUser] = useState(null);
 
-  const title = "Delete account";
-  const text =
-    "Are you sure you want to delete this account? All of" +
-    "this user's deployments and data will be permanently" +
+  const TITLE_DELETE = "Delete account";
+  const TEXT_DELETE =
+    "Are you sure you want to delete this account? All of " +
+    "this user's deployments and data will be permanently " +
     "removed. This action cannot be undone.";
+  const TITLE_RESET_PASSWORD = "Reset user's password";
+  const TEXT_RESET_PASSWORD =
+    "Are you sure you want to reset this user's password? " +
+    "This user will be notified through an email.";
 
   //on mount
   useEffect(() => {
@@ -30,11 +37,28 @@ const Users = (props) => {
       });
   }, []);
 
+  const resetPasswordRequest = () => {
+    services.user
+      .resetUserPassword({ id: user })
+      .then((response) => {
+        props.handleBannerState(true);
+        props.handleBannerColor("bg-green-600");
+        props.handleBannerText(response);
+      })
+      .catch((error) => {
+        props.handleBannerState(true);
+        props.handleBannerColor("bg-red-600");
+        props.handleBannerText(error);
+      });
+  };
+
   const deleteRequest = () => {
     services.user
       .delete({ id: user })
       .then((response) => {
-        props.handleBannerState(false);
+        props.handleBannerState(true);
+        props.handleBannerColor("bg-green-600");
+        props.handleBannerText(response);
       })
       .catch((error) => {
         props.handleBannerState(true);
@@ -45,7 +69,11 @@ const Users = (props) => {
 
   return (
     <>
-      <div className="flex flex-col overflow-x-hidden ">
+      <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+        Users
+      </h1>
+      <hr />
+      <div className="flex flex-col overflow-x-hidden pt-2">
         <div className="sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -64,8 +92,11 @@ const Users = (props) => {
                     >
                       Role
                     </th>
-                    <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">Edit</span>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Date of registration
                     </th>
                   </tr>
                 </thead>
@@ -87,17 +118,29 @@ const Users = (props) => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                            {user.Role}
+                            {user.role}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {user.role}
+                          {new Date(user.date).toLocaleString("pt-PT")}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <ViewBtn {...props} user={user} />
+                          <ViewBtn {...props} id={user.id} />
+                          <ResetPasswordBtn
+                            onClick={() => {
+                              setModal(true);
+                              setModalTitle(TITLE_RESET_PASSWORD);
+                              setModalText(TEXT_RESET_PASSWORD);
+                              setModalRequest(() => resetPasswordRequest);
+                              setUser(user.id);
+                            }}
+                          />
                           <DeleteBtn
                             onClick={() => {
                               setModal(true);
+                              setModalTitle(TITLE_DELETE);
+                              setModalText(TEXT_DELETE);
+                              setModalRequest(() => deleteRequest);
                               setUser(user.id);
                             }}
                           />
@@ -113,9 +156,9 @@ const Users = (props) => {
       <Modal
         open={modal}
         setOpen={setModal}
-        onAction={deleteRequest}
-        title={title}
-        text={text}
+        onAction={modalRequest}
+        title={modalTitle}
+        text={modalText}
       />
     </>
   );
@@ -131,17 +174,28 @@ export const ViewBtn = (props) => {
       onClick={() => {
         props.handler(
           <User
-            name={props.user.Name}
             handler={props.handler}
             handleBannerState={props.handleBannerState}
             handleBannerColor={props.handleBannerColor}
             handleBannerText={props.handleBannerText}
           />,
-          "/user/" + props.user.email
+          "/user/" + props.id
         );
       }}
     >
       View
+    </button>
+  );
+};
+
+export const ResetPasswordBtn = ({ onClick }) => {
+  return (
+    <button
+      type="button"
+      className="inline-flex items-center py-2 rounded-md text-indigo-600 hover:text-indigo-900 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-3"
+      onClick={onClick}
+    >
+      Reset password
     </button>
   );
 };

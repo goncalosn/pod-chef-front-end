@@ -17,6 +17,7 @@ import User from "../pages/User/User.js";
 import Nodes from "../pages/Dashboard/Nodes.js";
 import Whitelist from "../pages/Dashboard/Whitelist.js";
 import Node from "../pages/Node/Node.js";
+import MyProfile from "../pages/Dashboard/MyProfile.js";
 import AuthContext from "../configs/authContext.js";
 
 const Router = () => {
@@ -41,7 +42,7 @@ const Router = () => {
             <Route path="/dashboard/nodes" exact={true}>
               <Dashboard>{Nodes}</Dashboard>
             </Route>
-            <Route path="/dashboard/node/:name">
+            <Route path="/dashboard/node/:id">
               <Dashboard>{Node}</Dashboard>
             </Route>
             <Route path="/dashboard/deployments" exact={true}>
@@ -49,8 +50,8 @@ const Router = () => {
             </Route>
             <Route path="/dashboard/users" exact={true}>
               <Dashboard>{Users}</Dashboard>
-            </Route>{" "}
-            <Route path="/dashboard/user/:email" exact={true}>
+            </Route>
+            <Route path="/dashboard/user/:id">
               <Dashboard>{User}</Dashboard>
             </Route>
             <Route path="/dashboard/my-deployments" exact={true}>
@@ -58,6 +59,9 @@ const Router = () => {
             </Route>
             <Route path="/dashboard/whitelist" exact={true}>
               <Dashboard>{Whitelist}</Dashboard>
+            </Route>
+            <Route path="/dashboard/profile" exact={true}>
+              <Dashboard>{MyProfile}</Dashboard>
             </Route>
           </>
         ) : (
