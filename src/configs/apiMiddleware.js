@@ -22,9 +22,7 @@ export const apiRequest = (method, route, params) => {
         try {
           reject(error.response.data.message);
         } catch (err) {
-          err.response && reject("Error getting data");
-
-          reject(error.response.statusText);
+          reject("Error getting data");
         }
       });
   });

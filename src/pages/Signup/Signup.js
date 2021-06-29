@@ -14,6 +14,7 @@ export default class Signup extends React.Component {
       email: "",
       password: "",
       redirect: false,
+      err: "",
     };
   }
 
@@ -28,6 +29,9 @@ export default class Signup extends React.Component {
       })
       .then((res) => {
         this.context.signup(res);
+      })
+      .catch((err) => {
+        this.setState({ err: err });
       });
   }
 
@@ -112,6 +116,7 @@ export default class Signup extends React.Component {
                     Already have an account?
                   </a>
                 </div>
+                <p class="text-red-500 text-xs italic">{this.state.err}</p>
               </div>
 
               <div>

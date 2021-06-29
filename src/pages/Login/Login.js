@@ -13,6 +13,7 @@ export default class Login extends React.Component {
       email: "",
       password: "",
       redirect: false,
+      err: "",
     };
   }
 
@@ -23,6 +24,9 @@ export default class Login extends React.Component {
       .signIn({ email: this.state.email, password: this.state.password })
       .then((res) => {
         this.context.login(res);
+      })
+      .catch((err) => {
+        this.setState({ err: err });
       });
   }
 
@@ -98,6 +102,7 @@ export default class Login extends React.Component {
                   Forgot your password?
                 </a>
               </div>
+              <p class="text-red-500 text-xs italic">{this.state.err}</p>
             </div>
 
             <div>
