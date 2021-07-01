@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import jwt from "jsonwebtoken";
 import services from "../../services";
 
 const MyProfile = (props) => {
@@ -8,37 +9,36 @@ const MyProfile = (props) => {
     email: "",
     date: "",
     role: "",
+    password: "",
   });
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
 
   const handleNameChange = (e) => {
-    setName(e.target.value);
+    setData({ name: e.target.value });
   };
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+    setData({ password: e.target.value });
   };
 
   //on mount
   useEffect(() => {
-    services.user
-      .getUserProfile()
-      .then((response) => {
-        setData(response);
-        setName(response.name);
-        props.handleBannerState(false);
-      })
-      .catch((error) => {
-        props.handleBannerState(true);
-        props.handleBannerColor("bg-red-600");
-        props.handleBannerText(error);
-      });
+    //get user info
+    let token = JSON.parse(sessionStorage.getItem("user")).token;
+    token = jwt.decode(token);
+
+    setData({
+      name: token.name,
+      id: token.id,
+      date: token.date,
+      role: token.role,
+      email: token.email,
+      password: "",
+    });
   }, []);
 
   const updateName = () => {
     services.user
-      .updateOwnName({ name: name })
+      .updateOwnName({ name: data.name })
       .then((response) => {
         props.handleBannerState(true);
         props.handleBannerColor("bg-green-600");
@@ -53,7 +53,7 @@ const MyProfile = (props) => {
 
   const updatePassword = () => {
     services.user
-      .updateOwnPassword({ password: password })
+      .updateOwnPassword({ password: data.password })
       .then((response) => {
         props.handleBannerState(true);
         props.handleBannerColor("bg-green-600");
@@ -85,7 +85,7 @@ const MyProfile = (props) => {
             id="name"
             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             placeholder="Insert the name here"
-            value={name}
+            value={data.name}
             onChange={handleNameChange}
           />
         </div>
@@ -112,7 +112,7 @@ const MyProfile = (props) => {
             id="password"
             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             placeholder="Insert the password here"
-            value={password}
+            value={data.password}
             onChange={handlePasswordChange}
           />
         </div>
@@ -130,12 +130,13 @@ const MyProfile = (props) => {
         <div className="mt-5 md:mt-0 md:col-span-2">
           <div className="col-span-2">
             <label
-              htmlFor="street_address"
+              htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
               Email
             </label>
             <input
+              id="email"
               disabled
               type="text"
               className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -148,12 +149,13 @@ const MyProfile = (props) => {
         <div className="mt-5 md:mt-0 md:col-span-1">
           <div className="col-span-1">
             <label
-              htmlFor="street_address"
+              htmlFor="role"
               className="block text-sm font-medium text-gray-700"
             >
               Role
             </label>
             <input
+              id="role"
               disabled
               type="text"
               className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -166,12 +168,13 @@ const MyProfile = (props) => {
         <div className="mt-5 md:mt-0 md:col-span-1">
           <div className="col-span-1">
             <label
-              htmlFor="street_address"
+              htmlFor="date"
               className="block text-sm font-medium text-gray-700"
             >
               Date of registration
             </label>
             <input
+              id="date"
               disabled
               type="text"
               className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
