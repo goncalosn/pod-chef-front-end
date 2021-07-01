@@ -1,28 +1,52 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+
 import services from "../../services";
 import Breadcrumb from "../../components/Breadcrumb.js";
 import Users from "../Dashboard/Users.js";
 import Modal from "../../components/Modal.js";
 
 const User = (props) => {
+  let history = useHistory();
+
   //initialize state with undefined data
   const [data, setData] = useState({
     name: null,
     role: null,
     date: null,
   });
-  const [tableData, setTableData] = useState(null);
 
+  const [tableData, setTableData] = useState(null);
   const [modal, setModal] = useState(false);
   const [deployment, setDeployment] = useState(null);
+  const [role, setRole] = useState(null);
+  const [modalTitle, setModalTitle] = useState(null);
+  const [modalText, setModalText] = useState(null);
+  const [modalRequest, setModalRequest] = useState(null);
 
-  const TITLE = "Delete deployment";
-  const TEXT =
+  const TITLE_DELETE_DEPLOYMENT = "Delete deployment";
+  const TEXT_DELETE_DEPLOYMENT =
     "Are you sure you want to delete this deployment" +
     "This action cannot be undone.";
 
+  const TITLE_DELETE_USER = "Delete account";
+  const TEXT_DELETE_USER =
+    "Are you sure you want to delete this account? All of " +
+    "this user's deployments and data will be permanently " +
+    "removed. This action cannot be undone.";
+
+  const TITLE_RESET_PASSWORD = "Reset user's password";
+  const TEXT_RESET_PASSWORD =
+    "Are you sure you want to reset this user's password? " +
+    "This user will be notified through an email.";
+
   //on mount
   useEffect(() => {
+    getUserInfo();
+    getDeployments();
+  }, []);
+
+  const getUserInfo = () => {
     //get user info
     services.user
       .getUser({ id: props.id })
@@ -35,7 +59,9 @@ const User = (props) => {
         props.handleBannerColor("bg-red-600");
         props.handleBannerText(error);
       });
+  };
 
+  const getDeployments = () => {
     //get tabel data
     services.deployments
       .getDeploymentsByUser({ user: props.id })
@@ -48,11 +74,58 @@ const User = (props) => {
         props.handleBannerColor("bg-red-600");
         props.handleBannerText(error);
       });
-  }, []);
+  };
 
-  const deleteRequest = () => {
+  const deleteDeploymentRequest = () => {
     services.deployments
       .delete({ id: deployment })
+      .then((response) => {
+        props.handleBannerState(true);
+        props.handleBannerColor("bg-green-600");
+        props.handleBannerText(response);
+        getDeployments();
+      })
+      .catch((error) => {
+        props.handleBannerState(true);
+        props.handleBannerColor("bg-red-600");
+        props.handleBannerText(error);
+      });
+  };
+
+  const resetPasswordRequest = () => {
+    services.user
+      .resetUserPassword({ id: props.id })
+      .then((response) => {
+        props.handleBannerState(true);
+        props.handleBannerColor("bg-green-600");
+        props.handleBannerText(response);
+      })
+      .catch((error) => {
+        props.handleBannerState(true);
+        props.handleBannerColor("bg-red-600");
+        props.handleBannerText(error);
+      });
+  };
+
+  const deleteUserRequest = () => {
+    services.user
+      .delete({ id: props.id })
+      .then((response) => {
+        props.handleBannerState(true);
+        props.handleBannerColor("bg-green-600");
+        props.handleBannerText(response);
+        history.push("/dashboard/users");
+      })
+      .catch((error) => {
+        props.handleBannerState(true);
+        props.handleBannerColor("bg-red-600");
+        props.handleBannerText(error);
+      });
+  };
+
+  const updateRoleRequest = () => {
+    services.user
+      .updateUserRole({ id: props.id, role: data.role })
       .then((response) => {
         props.handleBannerState(true);
         props.handleBannerColor("bg-green-600");
@@ -84,8 +157,8 @@ const User = (props) => {
         ]}
         handler={props.handler}
       />
-      <div className="flex">
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg w-2/5">
+      <div className="grid md:grid-cols-8 md:row-span-3 md:gap-2">
+        <div className="bg-white shadow overflow-hidden sm:rounded-lg col-span-3 row-span-3">
           <div className="px-4 py-5 sm:px-6">
             <h3 className="text-lg leading-6 font-medium text-gray-900">
               User Information
@@ -102,7 +175,16 @@ const User = (props) => {
               <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt className="text-sm font-medium text-gray-500">Role</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {data.role}
+                  <SelectRole
+                    selected={data.role}
+                    onChange={(e) =>
+                      setData((prevState) => ({
+                        ...prevState,
+                        role: e.target.value,
+                      }))
+                    }
+                    onClick={updateRoleRequest}
+                  />
                 </dd>
               </div>
               <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -116,9 +198,40 @@ const User = (props) => {
             </dl>
           </div>
         </div>
+        <div className="bg-white shadow overflow-hidden sm:rounded-lg col-span-3 row-span-1 md:ml-5 mt-5 md:mt-0">
+          <div className="px-4 py-5 sm:px-6">
+            <h3 className="text-lg leading-6 font-medium text-gray-900">
+              Actions
+            </h3>
+          </div>
+          <div className="border-t border-gray-200">
+            <dl>
+              <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                  <ResetPasswordBtn
+                    onClick={() => {
+                      setModal(true);
+                      setModalTitle(TITLE_RESET_PASSWORD);
+                      setModalText(TEXT_RESET_PASSWORD);
+                      setModalRequest(() => resetPasswordRequest);
+                    }}
+                  />
+                  <DeleteUserBtn
+                    onClick={() => {
+                      setModal(true);
+                      setModalTitle(TITLE_DELETE_USER);
+                      setModalText(TEXT_DELETE_USER);
+                      setModalRequest(() => deleteUserRequest);
+                    }}
+                  />
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
       </div>
 
-      <h1 className="title-font sm:text-2xl text-2xl mb-4 mt-3 text-gray-900">
+      <h1 className="title-font font-medium sm:text-2xl text-2xl mb-4 mt-3 text-gray-900">
         Deployments
       </h1>
       <hr />
@@ -168,10 +281,13 @@ const User = (props) => {
                           {new Date(deployment.date).toLocaleString("pt-PT")}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <ViewBtn {...props} id={deployment.id} />
-                          <DeleteBtn
+                          <ViewDeploymentBtn id={deployment.id} />
+                          <DeleteDeploymentBtn
                             onClick={() => {
                               setModal(true);
+                              setModalTitle(TITLE_DELETE_DEPLOYMENT);
+                              setModalText(TEXT_DELETE_DEPLOYMENT);
+                              setModalRequest(() => deleteDeploymentRequest);
                               setDeployment(deployment.id);
                             }}
                           />
@@ -187,9 +303,9 @@ const User = (props) => {
       <Modal
         open={modal}
         setOpen={setModal}
-        onAction={deleteRequest}
-        title={TITLE}
-        text={TEXT}
+        onAction={modalRequest}
+        title={modalTitle}
+        text={modalText}
       />
     </>
   );
@@ -197,13 +313,13 @@ const User = (props) => {
 
 export default User;
 
-export const ViewBtn = (props) => {
+export const ViewDeploymentBtn = ({ id }) => {
   return (
     <button
-      type="button"
       className="inline-flex items-center py-2 rounded-md text-indigo-600 hover:text-indigo-900 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-3"
       onClick={() => {
         //TODO: open app on new tab
+        console.log(id);
       }}
     >
       View
@@ -211,16 +327,66 @@ export const ViewBtn = (props) => {
   );
 };
 
-export const DeleteBtn = ({ onClick }) => {
+export const DeleteDeploymentBtn = ({ onClick }) => {
   return (
     <>
       <button
-        type="button"
         className="inline-flex items-center py-2 rounded-md text-indigo-600 hover:text-indigo-900 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         onClick={onClick}
       >
         Delete
       </button>
     </>
+  );
+};
+
+export const ResetPasswordBtn = ({ onClick }) => {
+  return (
+    <button
+      className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 md:mr-2"
+      onClick={onClick}
+    >
+      Reset password
+    </button>
+  );
+};
+
+export const DeleteUserBtn = ({ onClick }) => {
+  return (
+    <>
+      <button
+        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        onClick={onClick}
+      >
+        Delete User
+      </button>
+    </>
+  );
+};
+
+export const SelectRole = ({ selected, onChange, onClick }) => {
+  return (
+    <div className="md:grid md:grid-cols-6 md:gap-6">
+      <div className="col-span-4">
+        <select
+          className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          value={selected}
+          onChange={(e) => {
+            onChange(e);
+          }}
+        >
+          <option>admin</option>
+          <option>member</option>
+        </select>
+      </div>
+      <div className="col-span-2 mt-1">
+        <button
+          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          onClick={onClick}
+        >
+          Save
+        </button>
+      </div>
+    </div>
   );
 };
