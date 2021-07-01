@@ -2,25 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import services from "../../services/index.js";
 import User from "../User/User.js";
-import Modal from "../../components/Modal.js";
 
 const Users = (props) => {
   const [data, setData] = useState(null);
-  const [modal, setModal] = useState(false);
-  const [modalTitle, setModalTitle] = useState(null);
-  const [modalText, setModalText] = useState(null);
-  const [modalRequest, setModalRequest] = useState(null);
-  const [user, setUser] = useState(null);
-
-  const TITLE_DELETE = "Delete account";
-  const TEXT_DELETE =
-    "Are you sure you want to delete this account? All of " +
-    "this user's deployments and data will be permanently " +
-    "removed. This action cannot be undone.";
-  const TITLE_RESET_PASSWORD = "Reset user's password";
-  const TEXT_RESET_PASSWORD =
-    "Are you sure you want to reset this user's password? " +
-    "This user will be notified through an email.";
 
   //on mount
   useEffect(() => {
@@ -36,36 +20,6 @@ const Users = (props) => {
         props.handleBannerText(error);
       });
   }, []);
-
-  const resetPasswordRequest = () => {
-    services.user
-      .resetUserPassword({ id: user })
-      .then((response) => {
-        props.handleBannerState(true);
-        props.handleBannerColor("bg-green-600");
-        props.handleBannerText(response);
-      })
-      .catch((error) => {
-        props.handleBannerState(true);
-        props.handleBannerColor("bg-red-600");
-        props.handleBannerText(error);
-      });
-  };
-
-  const deleteRequest = () => {
-    services.user
-      .delete({ id: user })
-      .then((response) => {
-        props.handleBannerState(true);
-        props.handleBannerColor("bg-green-600");
-        props.handleBannerText(response);
-      })
-      .catch((error) => {
-        props.handleBannerState(true);
-        props.handleBannerColor("bg-red-600");
-        props.handleBannerText(error);
-      });
-  };
 
   return (
     <>
@@ -126,24 +80,6 @@ const Users = (props) => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <ViewBtn {...props} id={user.id} />
-                          <ResetPasswordBtn
-                            onClick={() => {
-                              setModal(true);
-                              setModalTitle(TITLE_RESET_PASSWORD);
-                              setModalText(TEXT_RESET_PASSWORD);
-                              setModalRequest(() => resetPasswordRequest);
-                              setUser(user.id);
-                            }}
-                          />
-                          <DeleteBtn
-                            onClick={() => {
-                              setModal(true);
-                              setModalTitle(TITLE_DELETE);
-                              setModalText(TEXT_DELETE);
-                              setModalRequest(() => deleteRequest);
-                              setUser(user.id);
-                            }}
-                          />
                         </td>
                       </tr>
                     ))}
@@ -153,13 +89,6 @@ const Users = (props) => {
           </div>
         </div>
       </div>
-      <Modal
-        open={modal}
-        setOpen={setModal}
-        onAction={modalRequest}
-        title={modalTitle}
-        text={modalText}
-      />
     </>
   );
 };
@@ -185,31 +114,5 @@ export const ViewBtn = (props) => {
     >
       View
     </button>
-  );
-};
-
-export const ResetPasswordBtn = ({ onClick }) => {
-  return (
-    <button
-      type="button"
-      className="inline-flex items-center py-2 rounded-md text-indigo-600 hover:text-indigo-900 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-3"
-      onClick={onClick}
-    >
-      Reset password
-    </button>
-  );
-};
-
-export const DeleteBtn = ({ onClick }) => {
-  return (
-    <>
-      <button
-        type="button"
-        className="inline-flex items-center py-2 rounded-md text-indigo-600 hover:text-indigo-900 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        onClick={onClick}
-      >
-        Delete
-      </button>
-    </>
   );
 };
