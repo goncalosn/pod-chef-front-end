@@ -63,9 +63,6 @@ const Router = () => {
             <Route path="/dashboard/profile" exact={true}>
               <Dashboard>{MyProfile}</Dashboard>
             </Route>
-            <Route>
-              <Dashboard>{Nodes}</Dashboard>
-            </Route>
           </>
         ) : (
           //no permissions

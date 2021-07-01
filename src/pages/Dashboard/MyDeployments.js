@@ -8,7 +8,6 @@ const MyDeployments = (props) => {
   const [image, setImage] = useState("nginx");
   const [replicas, setReplicas] = useState(3);
   const [deployName, setDeployName] = useState("");
-  const [deleteDeploy, setDeleteDeploy] = useState(-1);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

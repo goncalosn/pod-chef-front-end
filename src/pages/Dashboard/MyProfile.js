@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import jwt from "jsonwebtoken";
+import React, { useEffect, useState, useContext } from "react";
 import services from "../../services";
+import AuthContext from "../../configs/authContext";
 
 const MyProfile = (props) => {
+  const auth = useContext(AuthContext);
   const [data, setData] = useState({
     name: "",
     id: "",
@@ -12,31 +13,23 @@ const MyProfile = (props) => {
     password: "",
   });
 
-  const handleNameChange = (e) => {
-    setData({ name: e.target.value });
-  };
-
-  const handlePasswordChange = (e) => {
-    setData({ password: e.target.value });
-  };
-
   //on mount
   useEffect(() => {
     //get user info
-    let token = JSON.parse(sessionStorage.getItem("user")).token;
-    token = jwt.decode(token);
+    let payload = JSON.parse(atob(auth.user.token.split(".")[1]));
 
     setData({
-      name: token.name,
-      id: token.id,
-      date: token.date,
-      role: token.role,
-      email: token.email,
+      name: payload.name,
+      id: payload.id,
+      date: payload.date,
+      role: payload.role,
+      email: payload.email,
       password: "",
     });
   }, []);
 
-  const updateName = () => {
+  const updateName = (e) => {
+    e.preventDefault();
     services.user
       .updateOwnName({ name: data.name })
       .then((response) => {
@@ -51,7 +44,8 @@ const MyProfile = (props) => {
       });
   };
 
-  const updatePassword = () => {
+  const updatePassword = (e) => {
+    e.preventDefault();
     services.user
       .updateOwnPassword({ password: data.password })
       .then((response) => {
@@ -86,15 +80,13 @@ const MyProfile = (props) => {
             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             placeholder="Insert the name here"
             value={data.name}
-            onChange={handleNameChange}
+            onChange={(e) => setData({ name: e.target.value })}
           />
         </div>
         <div className="col-span-4 md:mt-6 sm:mt-1">
           <button
             className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            onClick={() => {
-              updateName();
-            }}
+            onClick={(e) => updateName(e)}
           >
             Save
           </button>
@@ -113,15 +105,13 @@ const MyProfile = (props) => {
             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             placeholder="Insert the password here"
             value={data.password}
-            onChange={handlePasswordChange}
+            onChange={(e) => setData({ password: e.target.value })}
           />
         </div>
         <div className="col-span-4 md:mt-6 sm:mt-1">
           <button
             className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            onClick={() => {
-              updatePassword();
-            }}
+            onClick={(e) => updatePassword(e)}
           >
             Save
           </button>
