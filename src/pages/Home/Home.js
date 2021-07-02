@@ -64,31 +64,31 @@ export default class Home extends React.Component {
             </div>
           </div>
           <div className="grid grid-flow-col grid-rows-2 grid-cols-3 md:gap-10 gap-3 lg:w-2/5 md:w-1/2 mx-auto">
-            <div className="transform scale-110 -rotate-6 translate-x-10 translate-y-10">
+            <div className="transform scale-110 -rotate-6">
               <img
-                className="md:w-28 md:h-28 w-20 h-20 flex-none md:rounded-3xl rounded-xl shadow-md"
-                src="https://drive.google.com/uc?id=1568pLNHEN6oRnaarN0_qnGIg5fNX7i1R"
+                className="md:w-auto md:h-auto flex-none md:rounded-2xl rounded-xl shadow-md"
+                src="https://drive.google.com/uc?id=1oH3-ClDFsoZef8tq7UiRN7cIsHH6u0Jk"
                 alt="docker"
-              />
-            </div>
-            <div className="col-start-3 transform scale-75 rotate-6 translate-x-2 translate-y-15">
-              <img
-                className="md:w-52 md:h-36 w-24 h-24 flex-none md:rounded-3xl rounded-xl shadow-md"
-                src="https://drive.google.com/uc?id=1fK-7ulZn7bUIADP_1m03yrAvR7HoOiG2"
-                alt="ipt"
               />
             </div>
             <div className="transform scale-150 translate-y-11">
               <img
-                className="md:w-40 md:h-24 w-16 h-14 flex-none md:rounded-3xl rounded-xl shadow-md"
-                src="https://drive.google.com/uc?id=1ZSIMBvUl-vLRrb2eCMeL_sxMIb0Kggsm"
+                className="md:w-auto md:h-auto flex-none md:rounded-2xl rounded-xl shadow-md"
+                src="https://drive.google.com/uc?id=1ArFzOLNpkg39G4gVzr6UnL-ZYKha6vwH"
+                alt="ipt"
+              />
+            </div>
+            <div className="transform translate-x-20 translate-y-4">
+              <img
+                className="md:w-36 md:h-auto flex-none md:rounded-2xl rounded-xl shadow-md"
+                src="https://drive.google.com/uc?id=1oWcTZa8LpHjhb0h2HX8iwH-H10P1c-MI"
                 alt="kubernetes"
               />
             </div>
-            <div className="transform translate-y-24 translate-x-10">
+            <div className="row-start-1 col-start-2 col-span-2 transform translate-x-20 translate-y-4">
               <img
-                className="md:w-52 md:h-36 w-28 h-16 flex-none md:rounded-3xl rounded-xl shadow-md"
-                src="https://drive.google.com/uc?id=15ay0YQbl4DIDwA-pWoL1dOxhQ_ptSVuw"
+                className="md:w-auto md:h-auto flex-none md:rounded-2xl rounded-xl shadow-md"
+                src="https://drive.google.com/uc?id=1Rv7o90BAyLHhNBJz96MvC-WTWOwj4BbE"
                 alt="nginx"
               />
             </div>
@@ -226,138 +226,6 @@ export default class Home extends React.Component {
         {/* FOOTER  ------------------------------------------------------------- START*/}
 
         <footer className="text-gray-600 body-font">
-          <div className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
-            <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left md:mt-0 mt-10">
-              <a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                </svg>
-                <span className="ml-3 text-xl">Tailblocks</span>
-              </a>
-              <p className="mt-2 text-sm text-gray-500">
-                Air plant banjo lyft occupy retro adaptogen indego
-              </p>
-            </div>
-            <div className="flex-grow flex flex-wrap md:pr-20 -mb-10 md:text-left text-center order-first">
-              <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-                <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-                  CATEGORIES
-                </h2>
-                <nav className="list-none mb-10">
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      First Link
-                    </a>
-                  </li>
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      Second Link
-                    </a>
-                  </li>
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      Third Link
-                    </a>
-                  </li>
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      Fourth Link
-                    </a>
-                  </li>
-                </nav>
-              </div>
-              <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-                <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-                  CATEGORIES
-                </h2>
-                <nav className="list-none mb-10">
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      First Link
-                    </a>
-                  </li>
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      Second Link
-                    </a>
-                  </li>
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      Third Link
-                    </a>
-                  </li>
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      Fourth Link
-                    </a>
-                  </li>
-                </nav>
-              </div>
-              <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-                <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-                  CATEGORIES
-                </h2>
-                <nav className="list-none mb-10">
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      First Link
-                    </a>
-                  </li>
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      Second Link
-                    </a>
-                  </li>
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      Third Link
-                    </a>
-                  </li>
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      Fourth Link
-                    </a>
-                  </li>
-                </nav>
-              </div>
-              <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-                <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-                  CATEGORIES
-                </h2>
-                <nav className="list-none mb-10">
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      First Link
-                    </a>
-                  </li>
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      Second Link
-                    </a>
-                  </li>
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      Third Link
-                    </a>
-                  </li>
-                  <li>
-                    <a className="text-gray-600 hover:text-gray-800">
-                      Fourth Link
-                    </a>
-                  </li>
-                </nav>
-              </div>
-            </div>
-          </div>
           <div className="bg-gray-100">
             <div className="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
               <p className="text-gray-500 text-sm text-center sm:text-left">
