@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
+import jwt from "jsonwebtoken";
 import AuthContext from "../configs/authContext";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import {
@@ -22,6 +23,11 @@ export default class Navbar extends Component {
 
   render() {
     const auth = this.context;
+    let token = null;
+    if (auth.user) {
+      token = JSON.parse(sessionStorage.getItem("user")).token;
+      token = jwt.decode(token);
+    }
     return (
       <Popover className="relative bg-white">
         {({ open }) => (
@@ -31,9 +37,9 @@ export default class Navbar extends Component {
               <div className="flex justify-start lg:w-0 lg:flex-1 ml-4">
                 <a href="/">
                   <img
-                    className="h-8 w-auto sm:h-10"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                    alt=""
+                    className="md:h-11 md:w-auto h-10"
+                    src="../../logo.png"
+                    alt="podchef-logo"
                   />
                 </a>
               </div>
@@ -84,7 +90,7 @@ export default class Navbar extends Component {
                         >
                           <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                             <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                              {mobileMenu.map((item) => (
+                              {kubernetes.map((item) => (
                                 <a
                                   key={item.name}
                                   href={item.href}
@@ -106,11 +112,13 @@ export default class Navbar extends Component {
                               ))}
                             </div>
                             <div className="px-5 py-5 bg-gray-50 space-y-6 sm:flex sm:space-y-0 sm:space-x-10 sm:px-8">
-                              {callsToAction.map((item) => (
+                              {kubernetesCallsToAction.map((item) => (
                                 <div key={item.name} className="flow-root">
                                   <a
                                     href={item.href}
                                     className="-m-3 p-3 flex items-center rounded-md text-base font-medium text-gray-900 hover:bg-gray-100"
+                                    target="_blank"
+                                    rel="noreferrer"
                                   >
                                     <item.icon
                                       className="flex-shrink-0 h-6 w-6 text-gray-400"
@@ -137,7 +145,7 @@ export default class Navbar extends Component {
                           "group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         )}
                       >
-                        <span>Vmware ESXi</span>
+                        <span>Docker</span>
                         <ChevronDownIcon
                           className={classNames(
                             open ? "text-gray-600" : "text-gray-400",
@@ -163,7 +171,7 @@ export default class Navbar extends Component {
                         >
                           <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                             <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                              {resources.map((item) => (
+                              {docker.map((item) => (
                                 <a
                                   key={item.name}
                                   href={item.href}
@@ -184,37 +192,23 @@ export default class Navbar extends Component {
                                 </a>
                               ))}
                             </div>
-                            <div className="px-5 py-5 bg-gray-50 sm:px-8 sm:py-8">
-                              <div>
-                                <h3 className="text-sm tracking-wide font-medium text-gray-500 uppercase">
-                                  Recent Posts
-                                </h3>
-                                <ul className="mt-4 space-y-4">
-                                  {recentPosts.map((post) => (
-                                    <li
-                                      key={post.id}
-                                      className="text-base truncate"
-                                    >
-                                      <a
-                                        href={post.href}
-                                        className="font-medium text-gray-900 hover:text-gray-700"
-                                      >
-                                        {post.name}
-                                      </a>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                              <div className="mt-5 text-sm">
-                                <a
-                                  href="/"
-                                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                                >
-                                  {" "}
-                                  View all posts{" "}
-                                  <span aria-hidden="true">&rarr;</span>
-                                </a>
-                              </div>
+                            <div className="px-5 py-5 bg-gray-50 space-y-6 sm:flex sm:space-y-0 sm:space-x-10 sm:px-8">
+                              {dockerCallsToAction.map((item) => (
+                                <div key={item.name} className="flow-root">
+                                  <a
+                                    href={item.href}
+                                    className="-m-3 p-3 flex items-center rounded-md text-base font-medium text-gray-900 hover:bg-gray-100"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                  >
+                                    <item.icon
+                                      className="flex-shrink-0 h-6 w-6 text-gray-400"
+                                      aria-hidden="true"
+                                    />
+                                    <span className="ml-3">{item.name}</span>
+                                  </a>
+                                </div>
+                              ))}
                             </div>
                           </div>
                         </Popover.Panel>
@@ -224,17 +218,12 @@ export default class Navbar extends Component {
                 </Popover>
 
                 <a
-                  href="/"
+                  href="https://github.com/goncalosn/pod-chef-back-end/blob/main/README.md"
+                  target="_blank"
+                  rel="noreferrer"
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
                   Docs
-                </a>
-
-                <a
-                  href="/"
-                  className="text-base font-medium text-gray-500 hover:text-gray-900"
-                >
-                  Q&A
                 </a>
 
                 <a
@@ -249,12 +238,17 @@ export default class Navbar extends Component {
               {/* RIGHT BUTTONS ------------------------------------------------------------- START */}
               <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
                 {auth.user ? (
-                  <button
-                    className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 mr-4"
-                    onClick={() => auth.logout()}
-                  >
-                    Sign out
-                  </button>
+                  <>
+                    <h1 className="title-font text-xl font-light text-gray-900">
+                      {token.name}
+                    </h1>
+                    <button
+                      className="ml-4 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 mr-4"
+                      onClick={() => auth.logout()}
+                    >
+                      Sign out
+                    </button>
+                  </>
                 ) : (
                   <div>
                     <a
@@ -299,7 +293,7 @@ export default class Navbar extends Component {
                       <div>
                         <img
                           className="h-8 w-auto"
-                          src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                          src="../../logo.png"
                           alt="Workflow"
                         />
                       </div>
@@ -316,6 +310,8 @@ export default class Navbar extends Component {
                           <a
                             key={item.name}
                             href={item.href}
+                            target="_blank"
+                            rel="noreferrer"
                             className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
                           >
                             <item.icon
@@ -331,31 +327,6 @@ export default class Navbar extends Component {
                     </div>
                   </div>
                   <div className="py-6 px-5 space-y-6">
-                    <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                      <a
-                        href="/"
-                        className="text-base font-medium text-gray-900 hover:text-gray-700"
-                      >
-                        Pricing
-                      </a>
-
-                      <a
-                        href="/"
-                        className="text-base font-medium text-gray-900 hover:text-gray-700"
-                      >
-                        Docs
-                      </a>
-                      {resources.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className="text-base font-medium text-gray-900 hover:text-gray-700"
-                        >
-                          {item.name}
-                        </a>
-                      ))}
-                    </div>
-
                     {auth.user ? (
                       <div>
                         <span
@@ -402,77 +373,108 @@ function classNames(...classes) {
 
 const mobileMenu = [
   {
-    name: "Analytics",
+    name: "Kubernetes",
     description:
       "Get a better understanding of where your traffic is coming from.",
     href: "/",
     icon: ChartBarIcon,
   },
   {
-    name: "Engagement",
+    name: "Docker",
     description: "Speak directly to your customers in a more meaningful way.",
     href: "/",
     icon: CursorClickIcon,
   },
   {
-    name: "Security",
+    name: "Docs",
     description: "Your customers' data will be safe and secure.",
-    href: "/",
+    href: "https://github.com/goncalosn/pod-chef-back-end/blob/main/README.md",
     icon: ShieldCheckIcon,
   },
   {
-    name: "Integrations",
+    name: "Dashboard",
     description: "Connect with third-party tools that you're already using.",
-    href: "/",
+    href: "/dashboard",
     icon: ViewGridIcon,
   },
-  {
-    name: "Automations",
-    description:
-      "Build strategic funnels that will drive your customers to convert",
-    href: "/",
-    icon: RefreshIcon,
-  },
 ];
-const callsToAction = [
-  { name: "Watch Demo", href: "/", icon: PlayIcon },
-  { name: "Contact Sales", href: "", icon: PhoneIcon },
-];
-const resources = [
+
+const kubernetes = [
   {
-    name: "Help Center",
+    name: "Deployments",
     description:
-      "Get all of your questions answered in our forums or contact support.",
-    href: "/",
+      "Deployments ease the work necessary to maintain a application.",
+    href: "https://kubernetes.io/docs/concepts/workloads/controllers/deployment",
     icon: SupportIcon,
   },
   {
-    name: "Guides",
-    description:
-      "Learn how to maximize our platform to get the most out of it.",
-    href: "/",
+    name: "Services",
+    description: "Services expose running applications to the network.",
+    href: "https://kubernetes.io/docs/concepts/services-networking/service",
     icon: BookmarkAltIcon,
   },
   {
-    name: "Events",
-    description:
-      "See what meet-ups and other events we might be planning near you.",
-    href: "/",
+    name: "Ingresses",
+    description: "Ingresses provide load balancing between services.",
+    href: "https://kubernetes.io/docs/concepts/services-networking/ingress",
     icon: CalendarIcon,
   },
   {
-    name: "Security",
-    description: "Understand how we take your privacy seriously.",
-    href: "/",
+    name: "Namespaces",
+    description: "Namespaces provide a way to organize kubernetes objects.",
+    href: "https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/",
     icon: ShieldCheckIcon,
   },
 ];
-const recentPosts = [
-  { id: 1, name: "Boost your conversion rate", href: "/" },
+
+const kubernetesCallsToAction = [
   {
-    id: 2,
-    name: "How to use search engine optimization to drive traffic to your site",
-    href: "/",
+    name: "Getting started",
+    href: "https://kubernetes.io/docs/setup/",
+    icon: PlayIcon,
   },
-  { id: 3, name: "Improve your customer experience", href: "/" },
+  {
+    name: "Learn kubernetes",
+    href: "https://kubernetes.io/docs/tutorials/",
+    icon: BookmarkAltIcon,
+  },
+];
+
+const docker = [
+  {
+    name: "Containers",
+    description: "What is a container.",
+    href: "https://www.docker.com/resources/what-container",
+    icon: SupportIcon,
+  },
+  {
+    name: "Integration with Kubernetes",
+    description: "How Docker integrates with Kubernetes",
+    href: "https://www.docker.com/products/kubernetes",
+    icon: BookmarkAltIcon,
+  },
+  {
+    name: "Community",
+    description: "Explore Docker with multiple other developers.",
+    href: "https://www.docker.com/docker-community",
+    icon: CalendarIcon,
+  },
+  {
+    name: "Docker hub",
+    description: "The official docker image repository.",
+    href: "https://hub.docker.com/",
+    icon: ShieldCheckIcon,
+  },
+];
+const dockerCallsToAction = [
+  {
+    name: "Try docker",
+    href: "https://labs.play-with-docker.com/",
+    icon: PlayIcon,
+  },
+  {
+    name: "Learn docker",
+    href: "https://docs.docker.com/",
+    icon: BookmarkAltIcon,
+  },
 ];
