@@ -53,15 +53,6 @@ const Router = () => {
               <Route path="/dashboard/profile" exact={true}>
                 <Dashboard>{MyProfile}</Dashboard>
               </Route>
-
-              {/* 404 routes */}
-
-              <Route path="/dashboard/">
-                <Dashboard>{MyDeployments}</Dashboard>
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
             </>
           ) : (
             <>
@@ -91,15 +82,6 @@ const Router = () => {
               </Route>
               <Route path="/dashboard/profile" exact={true}>
                 <Dashboard>{MyProfile}</Dashboard>
-              </Route>
-
-              {/* 404 routes */}
-
-              <Route path="/dashboard/">
-                <Dashboard>{Nodes}</Dashboard>
-              </Route>
-              <Route path="/">
-                <Home />
               </Route>
             </>
           )
