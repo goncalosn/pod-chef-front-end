@@ -107,6 +107,7 @@ export const ViewBtn = (props) => {
             handleBannerState={props.handleBannerState}
             handleBannerColor={props.handleBannerColor}
             handleBannerText={props.handleBannerText}
+            id={props.id}
           />,
           "/user/" + props.id
         );

@@ -19,14 +19,13 @@ const User = (props) => {
   const [tableData, setTableData] = useState(null);
   const [modal, setModal] = useState(false);
   const [deployment, setDeployment] = useState(null);
-  const [role, setRole] = useState(null);
   const [modalTitle, setModalTitle] = useState(null);
   const [modalText, setModalText] = useState(null);
   const [modalRequest, setModalRequest] = useState(null);
 
   const TITLE_DELETE_DEPLOYMENT = "Delete deployment";
   const TEXT_DELETE_DEPLOYMENT =
-    "Are you sure you want to delete this deployment" +
+    "Are you sure you want to delete this deployment? " +
     "This action cannot be undone.";
 
   const TITLE_DELETE_USER = "Delete account";
@@ -137,6 +136,21 @@ const User = (props) => {
         props.handleBannerText(error);
       });
   };
+
+  useEffect(() => {
+    if (!deployment) return;
+
+    setModal(true);
+    setModalTitle(TITLE_DELETE_DEPLOYMENT);
+    setModalText(TEXT_DELETE_DEPLOYMENT);
+    setModalRequest(() => deleteDeploymentRequest);
+  }, [deployment]);
+
+  useEffect(() => {
+    if (!modal) {
+      setDeployment(null);
+    }
+  }, [modal]);
 
   return (
     <>
@@ -268,9 +282,7 @@ const User = (props) => {
                     tableData.map((deployment) => (
                       <tr key={deployment.uuid}>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                            {deployment.uuid}
-                          </span>
+                          {deployment.uuid}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
@@ -278,17 +290,15 @@ const User = (props) => {
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {new Date(deployment.date).toLocaleString("pt-PT")}
+                          {new Date(deployment.created_at).toLocaleString(
+                            "pt-PT"
+                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <ViewDeploymentBtn id={deployment.id} />
+                          <ViewDeploymentBtn name={deployment.uuid} />
                           <DeleteDeploymentBtn
                             onClick={() => {
-                              setModal(true);
-                              setModalTitle(TITLE_DELETE_DEPLOYMENT);
-                              setModalText(TEXT_DELETE_DEPLOYMENT);
-                              setModalRequest(() => deleteDeploymentRequest);
-                              setDeployment(deployment.id);
+                              setDeployment(deployment.uuid);
                             }}
                           />
                         </td>
@@ -313,30 +323,30 @@ const User = (props) => {
 
 export default User;
 
-export const ViewDeploymentBtn = ({ id }) => {
+export const ViewDeploymentBtn = ({ name }) => {
+  const part1URL = process.env.REACT_APP_URL_PART1;
+  const part2URL = process.env.REACT_APP_URL_PART2;
+
   return (
-    <button
+    <a
       className="inline-flex items-center py-2 rounded-md text-indigo-600 hover:text-indigo-900 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-3"
-      onClick={() => {
-        //TODO: open app on new tab
-        console.log(id);
-      }}
+      href={part1URL + name + part2URL}
+      target="_blank"
+      rel="noopener noreferrer"
     >
       View
-    </button>
+    </a>
   );
 };
 
 export const DeleteDeploymentBtn = ({ onClick }) => {
   return (
-    <>
-      <button
-        className="inline-flex items-center py-2 rounded-md text-indigo-600 hover:text-indigo-900 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        onClick={onClick}
-      >
-        Delete
-      </button>
-    </>
+    <button
+      className="inline-flex items-center py-2 rounded-md text-indigo-600 hover:text-indigo-900 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      onClick={onClick}
+    >
+      Delete
+    </button>
   );
 };
 

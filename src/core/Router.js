@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import jwt from "jsonwebtoken";
 import {
   BrowserRouter as BRouter,
   Switch,
@@ -22,6 +23,12 @@ import AuthContext from "../configs/authContext.js";
 
 const Router = () => {
   const auth = useContext(AuthContext);
+  let token = null;
+  if (auth.user) {
+    token = JSON.parse(sessionStorage.getItem("user")).token;
+    token = jwt.decode(token);
+  }
+
   return (
     <BRouter>
       <Switch>
@@ -35,35 +42,67 @@ const Router = () => {
           {auth.user ? <Home /> : <Signup />}
         </Route>
         {auth.user ? (
-          <>
-            <Route path="/dashboard" exact={true}>
-              <Dashboard>{Nodes}</Dashboard>
-            </Route>
-            <Route path="/dashboard/nodes" exact={true}>
-              <Dashboard>{Nodes}</Dashboard>
-            </Route>
-            <Route path="/dashboard/node/:id">
-              <Dashboard>{Node}</Dashboard>
-            </Route>
-            <Route path="/dashboard/deployments" exact={true}>
-              <Dashboard>{Deployments}</Dashboard>
-            </Route>
-            <Route path="/dashboard/users" exact={true}>
-              <Dashboard>{Users}</Dashboard>
-            </Route>
-            <Route path="/dashboard/user/:id">
-              <Dashboard>{User}</Dashboard>
-            </Route>
-            <Route path="/dashboard/my-deployments" exact={true}>
-              <Dashboard>{MyDeployments}</Dashboard>
-            </Route>
-            <Route path="/dashboard/whitelist" exact={true}>
-              <Dashboard>{Whitelist}</Dashboard>
-            </Route>
-            <Route path="/dashboard/profile" exact={true}>
-              <Dashboard>{MyProfile}</Dashboard>
-            </Route>
-          </>
+          token && token.role === "member" ? (
+            <>
+              <Route path="/dashboard" exact={true}>
+                <Dashboard>{MyDeployments}</Dashboard>
+              </Route>
+              <Route path="/dashboard/my-deployments" exact={true}>
+                <Dashboard>{MyDeployments}</Dashboard>
+              </Route>
+              <Route path="/dashboard/profile" exact={true}>
+                <Dashboard>{MyProfile}</Dashboard>
+              </Route>
+
+              {/* 404 routes */}
+
+              <Route path="/dashboard/">
+                <Dashboard>{MyDeployments}</Dashboard>
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </>
+          ) : (
+            <>
+              <Route path="/dashboard" exact={true}>
+                <Dashboard>{Nodes}</Dashboard>
+              </Route>
+              <Route path="/dashboard/nodes" exact={true}>
+                <Dashboard>{Nodes}</Dashboard>
+              </Route>
+              <Route path="/dashboard/node/:id">
+                <Dashboard>{Node}</Dashboard>
+              </Route>
+              <Route path="/dashboard/deployments" exact={true}>
+                <Dashboard>{Deployments}</Dashboard>
+              </Route>
+              <Route path="/dashboard/users" exact={true}>
+                <Dashboard>{Users}</Dashboard>
+              </Route>
+              <Route path="/dashboard/user/:id">
+                <Dashboard>{User}</Dashboard>
+              </Route>
+              <Route path="/dashboard/my-deployments" exact={true}>
+                <Dashboard>{MyDeployments}</Dashboard>
+              </Route>
+              <Route path="/dashboard/whitelist" exact={true}>
+                <Dashboard>{Whitelist}</Dashboard>
+              </Route>
+              <Route path="/dashboard/profile" exact={true}>
+                <Dashboard>{MyProfile}</Dashboard>
+              </Route>
+
+              {/* 404 routes */}
+
+              <Route path="/dashboard/">
+                <Dashboard>{Nodes}</Dashboard>
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </>
+          )
         ) : (
           //no permissions
           <Redirect to="/login" />
