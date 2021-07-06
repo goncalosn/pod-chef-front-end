@@ -11,7 +11,9 @@ const Whitelist = (props) => {
   const [modalRequest, setModalRequest] = useState(null);
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState(null);
+  const [modalBtnText, setModalBtnText] = useState(null);
 
+  const TITLE_BTN_TEXT = "Delete";
   const TITLE_DELETE = "Delete invite";
   const TEXT_DELETE = "Are you sure you want to delete this invite?";
 
@@ -30,6 +32,7 @@ const Whitelist = (props) => {
       setModal(true);
       setModalTitle(TITLE_DELETE);
       setModalText(TEXT_DELETE);
+      setModalBtnText(TITLE_BTN_TEXT);
       setModalRequest(() => deleteRequest);
     }
   }, [user]);
@@ -150,6 +153,7 @@ const Whitelist = (props) => {
         open={modal}
         setOpen={setModal}
         onAction={modalRequest}
+        btnText={modalBtnText}
         title={modalTitle}
         text={modalText}
       />

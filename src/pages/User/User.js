@@ -22,7 +22,9 @@ const User = (props) => {
   const [modalTitle, setModalTitle] = useState(null);
   const [modalText, setModalText] = useState(null);
   const [modalRequest, setModalRequest] = useState(null);
+  const [modalBtnText, setModalBtnText] = useState(null);
 
+  const TITLE_DELETE_BTN_TEXT = "Delete";
   const TITLE_DELETE_DEPLOYMENT = "Delete deployment";
   const TEXT_DELETE_DEPLOYMENT =
     "Are you sure you want to delete this deployment? " +
@@ -34,6 +36,7 @@ const User = (props) => {
     "this user's deployments and data will be permanently " +
     "removed. This action cannot be undone.";
 
+  const TITLE_RESET_PASSWORD_BTN_TEXT = "Reset";
   const TITLE_RESET_PASSWORD = "Reset user's password";
   const TEXT_RESET_PASSWORD =
     "Are you sure you want to reset this user's password? " +
@@ -143,6 +146,7 @@ const User = (props) => {
     setModal(true);
     setModalTitle(TITLE_DELETE_DEPLOYMENT);
     setModalText(TEXT_DELETE_DEPLOYMENT);
+    setModalBtnText(TITLE_DELETE_BTN_TEXT);
     setModalRequest(() => deleteDeploymentRequest);
   }, [deployment]);
 
@@ -227,6 +231,7 @@ const User = (props) => {
                       setModal(true);
                       setModalTitle(TITLE_RESET_PASSWORD);
                       setModalText(TEXT_RESET_PASSWORD);
+                      setModalBtnText(TITLE_RESET_PASSWORD_BTN_TEXT);
                       setModalRequest(() => resetPasswordRequest);
                     }}
                   />
@@ -235,6 +240,7 @@ const User = (props) => {
                       setModal(true);
                       setModalTitle(TITLE_DELETE_USER);
                       setModalText(TEXT_DELETE_USER);
+                      setModalBtnText(TITLE_DELETE_BTN_TEXT);
                       setModalRequest(() => deleteUserRequest);
                     }}
                   />
@@ -316,6 +322,7 @@ const User = (props) => {
         onAction={modalRequest}
         title={modalTitle}
         text={modalText}
+        btnText={modalBtnText}
       />
     </>
   );

@@ -2,7 +2,7 @@ import React, { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 
-const Modal = ({ title, text, open, setOpen, onAction }) => {
+const Modal = ({ title, text, open, setOpen, onAction, btnText }) => {
   const cancelButtonRef = useRef(null);
 
   return (
@@ -75,7 +75,7 @@ const Modal = ({ title, text, open, setOpen, onAction }) => {
                     setOpen(false);
                   }}
                 >
-                  Delete
+                  {btnText}
                 </button>
                 <button
                   type="button"

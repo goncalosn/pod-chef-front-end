@@ -14,7 +14,9 @@ const MyDeployments = (props) => {
   const [modalTitle, setModalTitle] = useState(null);
   const [modalText, setModalText] = useState(null);
   const [modalRequest, setModalRequest] = useState(null);
+  const [modalBtnText, setModalBtnText] = useState(null);
 
+  const TITLE_BTN_TEXT = "Delete";
   const TITLE_DELETE_DEPLOYMENT = "Delete deployment";
   const TEXT_DELETE_DEPLOYMENT =
     "Are you sure you want to delete this deployment? " +
@@ -31,12 +33,28 @@ const MyDeployments = (props) => {
       .then((res) => {
         props.handleBannerState(true);
         props.handleBannerColor("bg-green-600");
-        props.handleBannerText("Application " + res + " created.");
+        props.handleBannerText(
+          <p>
+            Application created!{" "}
+            <a
+              className="hover:text-green-900"
+              href={part1URL + deployName + part2URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {part1URL + deployName + part2URL}
+            </a>
+          </p>
+        );
 
         services.deployments
           .getMyDeployments()
           .then((res) => setDeploys(res ? res : []))
-          .catch((err) => console.error(err));
+          .catch((err) => {
+            props.handleBannerState(true);
+            props.handleBannerColor("bg-red-600");
+            props.handleBannerText(err);
+          });
       })
       .catch((e) => {
         props.handleBannerState(true);
@@ -54,7 +72,7 @@ const MyDeployments = (props) => {
         props.handleBannerText(res);
 
         services.deployments
-          .getDeploymentsByUser()
+          .getMyDeployments()
           .then((res) => setDeploys(res ? res : []))
           .catch((err) => {
             props.handleBannerState(true);
@@ -89,6 +107,7 @@ const MyDeployments = (props) => {
     if (!deployment) return;
 
     setModal(true);
+    setModalBtnText(TITLE_BTN_TEXT);
     setModalTitle(TITLE_DELETE_DEPLOYMENT);
     setModalText(TEXT_DELETE_DEPLOYMENT);
     setModalRequest(() => handleDelete);
@@ -269,6 +288,7 @@ const MyDeployments = (props) => {
       <Modal
         open={modal}
         setOpen={setModal}
+        btnText={modalBtnText}
         onAction={modalRequest}
         title={modalTitle}
         text={modalText}

@@ -9,7 +9,9 @@ const Deployments = (props) => {
   const [modalText, setModalText] = useState(null);
   const [modalRequest, setModalRequest] = useState(null);
   const [deployment, setDeployment] = useState(null);
+  const [modalBtnText, setModalBtnText] = useState(null);
 
+  const TITLE_BTN_TEXT = "Delete";
   const TITLE_DELETE_DEPLOYMENT = "Delete deployment";
   const TEXT_DELETE_DEPLOYMENT =
     "Are you sure you want to delete this deployment? " +
@@ -56,6 +58,7 @@ const Deployments = (props) => {
     setModal(true);
     setModalTitle(TITLE_DELETE_DEPLOYMENT);
     setModalText(TEXT_DELETE_DEPLOYMENT);
+    setModalBtnText(TITLE_BTN_TEXT);
     setModalRequest(() => handleDelete);
   }, [deployment]);
 
@@ -135,6 +138,7 @@ const Deployments = (props) => {
       <Modal
         open={modal}
         setOpen={setModal}
+        btnText={modalBtnText}
         onAction={modalRequest}
         title={modalTitle}
         text={modalText}
