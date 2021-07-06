@@ -1,9 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
+import jwt from "jsonwebtoken";
+
 import services from "../../services";
 import AuthContext from "../../configs/authContext";
 
 const MyProfile = (props) => {
   const auth = useContext(AuthContext);
+  let token = null;
+  if (auth.user) {
+    token = JSON.parse(sessionStorage.getItem("user")).token;
+    token = jwt.decode(token);
+  }
+
   const [data, setData] = useState({
     name: "",
     id: "",
@@ -15,15 +23,12 @@ const MyProfile = (props) => {
 
   //on mount
   useEffect(() => {
-    //get user info
-    let payload = JSON.parse(atob(auth.user.token.split(".")[1]));
-
     setData({
-      name: payload.name,
-      id: payload.id,
-      date: payload.date,
-      role: payload.role,
-      email: payload.email,
+      name: token.name,
+      id: token.id,
+      date: token.date,
+      role: token.role,
+      email: token.email,
       password: "",
     });
   }, []);
