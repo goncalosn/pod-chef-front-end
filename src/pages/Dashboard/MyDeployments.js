@@ -134,6 +134,9 @@ const MyDeployments = (props) => {
                 <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
                   <div className="grid grid-cols-3 gap-6">
                     <div className="col-span-3 sm:col-span-2">
+                      <p className="block text-l font-medium text-red-500 mb-3">
+                        Your application must be listening on port 8080
+                      </p>
                       <label
                         htmlFor="company_website"
                         className="block text-sm font-medium text-gray-700"
