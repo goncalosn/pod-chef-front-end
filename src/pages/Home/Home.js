@@ -2,7 +2,11 @@ import React from "react";
 
 import Navbar from "../../components/Navbar.js";
 import AuthContext from "../../configs/authContext.js";
-import jwt from "jsonwebtoken";
+import dockerLogo from "../../assets/docker.png";
+import iptLogo from "../../assets/ipt-logo.png";
+import kubernetesLogo from "../../assets/kubernetes.png";
+import nginxLogo from "../../assets/nginx-logo.png";
+import showoff from "../../assets/showoff.gif"
 
 export default class Home extends React.Component {
   static contextType = AuthContext;
@@ -65,32 +69,56 @@ export default class Home extends React.Component {
           </div>
           <div className="grid grid-flow-col grid-rows-2 grid-cols-3 md:gap-10 gap-3 lg:w-2/5 md:w-1/2 mx-auto">
             <div className="transform scale-110 -rotate-6">
-              <img
-                className="md:w-auto md:h-auto flex-none md:rounded-2xl rounded-xl shadow-md"
-                src="https://drive.google.com/uc?id=1oH3-ClDFsoZef8tq7UiRN7cIsHH6u0Jk"
-                alt="docker"
-              />
+              <a
+                href="https://www.docker.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  className="md:w-auto md:h-auto flex-none md:rounded-2xl rounded-xl shadow-md"
+                  src={dockerLogo}
+                  alt="docker"
+                />
+              </a>
             </div>
             <div className="transform scale-150 translate-y-11">
-              <img
-                className="md:w-auto md:h-auto flex-none md:rounded-2xl rounded-xl shadow-md"
-                src="https://drive.google.com/uc?id=1ArFzOLNpkg39G4gVzr6UnL-ZYKha6vwH"
-                alt="ipt"
-              />
+              <a
+                href="http://www.ipt.pt/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  className="md:w-auto md:h-auto flex-none md:rounded-2xl rounded-xl shadow-md"
+                  src={iptLogo}
+                  alt="ipt"
+                />
+              </a>
             </div>
             <div className="transform translate-x-20 translate-y-4">
-              <img
-                className="md:w-36 md:h-auto flex-none md:rounded-2xl rounded-xl shadow-md"
-                src="https://drive.google.com/uc?id=1oWcTZa8LpHjhb0h2HX8iwH-H10P1c-MI"
-                alt="kubernetes"
-              />
+              <a
+                href="https://kubernetes.io/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  className="md:w-36 md:h-auto flex-none md:rounded-2xl rounded-xl shadow-md"
+                  src={kubernetesLogo}
+                  alt="kubernetes"
+                />
+              </a>
             </div>
             <div className="row-start-1 col-start-2 col-span-2 transform translate-x-20 translate-y-4">
-              <img
-                className="md:w-auto md:h-auto flex-none md:rounded-2xl rounded-xl shadow-md"
-                src="https://drive.google.com/uc?id=1Rv7o90BAyLHhNBJz96MvC-WTWOwj4BbE"
-                alt="nginx"
-              />
+              <a
+                href="https://www.nginx.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  className="md:w-auto md:h-auto flex-none md:rounded-2xl rounded-xl shadow-md"
+                  src={nginxLogo}
+                  alt="nginx"
+                />
+              </a>
             </div>
           </div>
         </div>
@@ -214,8 +242,8 @@ export default class Home extends React.Component {
               </div>
               <img
                 className="lg:w-3/5 md:w-1/2 object-cover object-center rounded-lg md:mt-0 mt-12"
-                src="https://dummyimage.com/1200x500"
-                alt="step"
+                src={showoff}
+                alt="show off site"
               />
             </div>
           </div>

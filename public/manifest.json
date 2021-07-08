@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Pod Chef App",
+  "name": "Pod Chef is a tool that works with Kubernetes and Docker to deploy containers on IPT's cloud.",
   "icons": [
     {
       "src": "favicon.ico",

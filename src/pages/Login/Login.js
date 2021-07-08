@@ -51,7 +51,7 @@ export default class Login extends React.Component {
                 href="/signup"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
-                create an account for free
+                ask for an account
               </a>
             </p>
           </div>
@@ -94,14 +94,6 @@ export default class Login extends React.Component {
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot your password?
-                </a>
-              </div>
               <p class="text-red-500 text-xs italic">{this.state.err}</p>
             </div>
 
