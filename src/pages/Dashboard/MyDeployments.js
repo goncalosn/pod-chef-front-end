@@ -8,6 +8,7 @@ const MyDeployments = (props) => {
   const [deploys, setDeploys] = useState([]);
   const [image, setImage] = useState("nginx");
   const [replicas, setReplicas] = useState(3);
+  const [port, setPort] = useState(80);
   const [deployName, setDeployName] = useState("");
   const [modal, setModal] = useState(false);
   const [deployment, setDeployment] = useState(null);
@@ -29,7 +30,12 @@ const MyDeployments = (props) => {
     evt.preventDefault();
 
     services.deployments
-      .create({ name: deployName, image, replicas })
+      .create({
+        name: deployName,
+        image: image,
+        replicas: replicas,
+        port: port,
+      })
       .then((res) => {
         props.handleBannerState(true);
         props.handleBannerColor("bg-green-600");
@@ -131,12 +137,9 @@ const MyDeployments = (props) => {
           <div className="mt-5 md:mt-0 md:col-span-2">
             <form onSubmit={(evt) => handleSubmit(evt)}>
               <div className="shadow sm:rounded-md sm:overflow-hidden">
-                <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
+                <div className="px-4 pt-3 bg-white">
                   <div className="grid grid-cols-3 gap-6">
                     <div className="col-span-3 sm:col-span-2">
-                      <p className="block text-l font-medium text-red-500 mb-3">
-                        Your application must be listening on port 8080
-                      </p>
                       <label
                         htmlFor="company_website"
                         className="block text-sm font-medium text-gray-700"
@@ -162,7 +165,7 @@ const MyDeployments = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
+                <div className="px-4 pt-3 bg-white">
                   <div className="grid grid-cols-3 gap-6">
                     <div className="col-span-3 sm:col-span-2">
                       <label
@@ -187,7 +190,7 @@ const MyDeployments = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="px-4 bg-white sm:p-6">
+                <div className="px-4 pt-3 bg-white">
                   <div className="grid grid-cols-3 gap-6">
                     <div className="col-span-3 sm:col-span-2">
                       <label
@@ -206,6 +209,28 @@ const MyDeployments = (props) => {
                           onChange={(e) =>
                             setReplicas(parseInt(e.target.value))
                           }
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="px-4 pt-3 bg-white">
+                  <div className="grid grid-cols-3 gap-6">
+                    <div className="col-span-3 sm:col-span-2">
+                      <label
+                        htmlFor="company_website"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Container port
+                      </label>
+                      <div className="mt-1 flex rounded-md shadow-sm">
+                        <input
+                          type="text"
+                          name="company_website"
+                          id="company_website"
+                          className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded sm:text-sm border-gray-300"
+                          placeholder="80"
+                          onChange={(e) => setPort(parseInt(e.target.value))}
                         />
                       </div>
                     </div>
