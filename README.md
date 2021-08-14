@@ -1,6 +1,6 @@
 # pod-chef-front-end
 
-Dashboard to control kubernetes's pods and to analyze data
+Dashboard to the [Pod Chef API](https://github.com/goncalosn/pod-chef-back-end)
 
 ## .env example
 
